@@ -1,0 +1,98 @@
+{
+  "date": "2026-04-05",
+  "n_strategies": 14,
+  "weighting": "sharpe_wt",
+  "sharpe_eq": 2.255,
+  "sharpe_ewma": 2.812,
+  "annual_return": 20.8,
+  "annual_vol": 9.2,
+  "max_dd": -10.4,
+  "wfcv_oos": 2.841,
+  "theoretical_sr": 3.509,
+  "strategies": [
+    {
+      "name": "trend_SHY",
+      "weight": 0.13,
+      "ewma_sr": 1.488,
+      "corr_spy": -0.196
+    },
+    {
+      "name": "dmom_GLD",
+      "weight": 0.1004,
+      "ewma_sr": 1.363,
+      "corr_spy": 0.066
+    },
+    {
+      "name": "dmom_EWY",
+      "weight": 0.0971,
+      "ewma_sr": 1.333,
+      "corr_spy": 0.268
+    },
+    {
+      "name": "ll_hangseng",
+      "weight": 0.106,
+      "ewma_sr": 1.315,
+      "corr_spy": -0.209
+    },
+    {
+      "name": "curve_steep",
+      "weight": 0.0955,
+      "ewma_sr": 0.928,
+      "corr_spy": 0.198
+    },
+    {
+      "name": "dmom_SOL",
+      "weight": 0.0919,
+      "ewma_sr": 0.842,
+      "corr_spy": 0.128
+    },
+    {
+      "name": "mr_FXA",
+      "weight": 0.0659,
+      "ewma_sr": 0.825,
+      "corr_spy": 0.108
+    },
+    {
+      "name": "dmom_XLU",
+      "weight": 0.0507,
+      "ewma_sr": 0.765,
+      "corr_spy": 0.302
+    },
+    {
+      "name": "mr_IBB",
+      "weight": 0.0767,
+      "ewma_sr": 0.74,
+      "corr_spy": 0.325
+    },
+    {
+      "name": "trend_REMX",
+      "weight": 0.0321,
+      "ewma_sr": 0.625,
+      "corr_spy": -0.273
+    },
+    {
+      "name": "xmom_crypto",
+      "weight": 0.0465,
+      "ewma_sr": 0.573,
+      "corr_spy": -0.041
+    },
+    {
+      "name": "xmom_energy",
+      "weight": 0.0246,
+      "ewma_sr": 0.525,
+      "corr_spy": -0.023
+    },
+    {
+      "name": "mr_WEAT",
+      "weight": 0.0352,
+      "ewma_sr": 0.432,
+      "corr_spy": 0.027
+    },
+    {
+      "name": "xmom_precious",
+      "weight": 0.0476,
+      "ewma_sr": 0.418,
+      "corr_spy": -0.106
+    }
+  ]
+}

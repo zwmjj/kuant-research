@@ -1,0 +1,23 @@
+{
+  "method": "max_sr_2bp",
+  "sharpe": 2.654,
+  "ewma": 2.98,
+  "weights": {
+    "trend_SHY": 0.01,
+    "dmom_GLD": 0.1099,
+    "dmom_EWY": 0.1431,
+    "dmom_SOL": 0.0854,
+    "dmom_XLU": 0.01,
+    "mr_FXA": 0.01,
+    "mr_IBB": 0.0778,
+    "mr_WEAT": 0.0218,
+    "trend_REMX": 0.01,
+    "xmom_crypto": 0.0117,
+    "xmom_energy": 0.0145,
+    "xmom_precious": 0.0763,
+    "ll_hangseng": 0.2125,
+    "ll_ftse": 0.01,
+    "curve_steep": 0.1083,
+    "fed_ease": 0.0888
+  }
+}
