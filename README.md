@@ -10,6 +10,9 @@ This repository documents the research methodology and empirical findings behind
 
 ## Contents
 
+### [`PORTFOLIO_MANAGER_PROFILE.md`](PORTFOLIO_MANAGER_PROFILE.md)
+Public profile of the Quantitative Portfolio Manager role — mandate, strategy families, portfolio-construction framework, and risk methodology. No live P&L, account data, or signal parameters.
+
 ### `research/`
 Empirical writeups — research question, method, findings, implications.
 
