@@ -1,0 +1,55 @@
+# A-share factor proxies study configuration.
+#
+# The index symbols below are akshare-native — sh = Shanghai, sz = Shenzhen.
+# These 8 indices were hand-picked to span style axes that matter for factor
+# construction: size (CSI300/500/1000), growth board (GEM), value/growth
+# (SSE Value/Growth), yield (Dividend), risk (LowVol).
+
+start_date: "2010-01-31"
+end_date:   "2025-12-31"
+is_oos_split: "2020-12-31"
+
+indices:
+  CSI300:   "sh000300"
+  CSI500:   "sh000905"
+  CSI1000:  "sh000852"
+  GEM:      "sz399006"
+  Value:    "sh000029"
+  Growth:   "sh000030"
+  Dividend: "sh000922"
+  LowVol:   "sh000803"
+
+# Factor constructions. Each entry is [long_label, short_label]; the
+# factor return is long - short, monthly.
+factors:
+  SMB_CN:    ["CSI500",   "CSI300"]
+  HML_CN:    ["Value",    "Growth"]
+  LowVol_CN: ["LowVol",   "CSI300"]
+  Div_CN:    ["Dividend", "CSI300"]
+  Growth_CN: ["GEM",      "CSI300"]
+
+rolling_windows:
+  - ["2010-01-31", "2012-12-31", "10-12"]
+  - ["2013-01-31", "2015-12-31", "13-15"]
+  - ["2016-01-31", "2018-12-31", "16-18"]
+  - ["2019-01-31", "2021-12-31", "19-21"]
+  - ["2022-01-31", "2025-12-31", "22-25"]
+
+# Whether to pull FF5 and compute the cross-market correlation /
+# regime cross-analysis. Set false to run the study with no network
+# access beyond akshare.
+us_regime: true
+
+# Periods for the value-growth cycle section.
+value_growth_cycle_windows:
+  - ["2010-01-31", "2012-12-31", "2010-12"]
+  - ["2013-01-31", "2015-12-31", "2013-15"]
+  - ["2016-01-31", "2018-12-31", "2016-18"]
+  - ["2019-01-31", "2021-12-31", "2019-21"]
+  - ["2022-01-31", "2025-12-31", "2022-25"]
+
+# LowVol rolling windows (shorter, since the A-share LowVol index is newer)
+lowvol_rolling_windows:
+  - ["2019-01-31", "2020-12-31", "19-20"]
+  - ["2021-01-31", "2022-12-31", "21-22"]
+  - ["2023-01-31", "2025-12-31", "23-25"]

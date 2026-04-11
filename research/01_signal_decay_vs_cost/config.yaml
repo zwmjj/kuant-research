@@ -1,0 +1,46 @@
+# Signal decay vs transaction cost study — parameters.
+#
+# Default universe is 10 SPDR sector ETFs, which gives a clean
+# reproducible 10-asset cross-sectional universe. Swap in a broader
+# ticker list to stress the story on a wider universe.
+
+universe:
+  - XLK    # Technology
+  - XLF    # Financials
+  - XLE    # Energy
+  - XLV    # Health Care
+  - XLY    # Consumer Discretionary
+  - XLP    # Consumer Staples
+  - XLI    # Industrials
+  - XLB    # Materials
+  - XLU    # Utilities
+  - XLRE   # Real Estate
+
+start_date: "2015-12-31"   # XLRE listed Oct 2015 — use that as the binding constraint
+end_date:   "2025-12-31"
+
+# Which signals to run. Remove any to skip.
+signals:
+  - mom12     # classic 12-month momentum
+  - mom1      # 1-month reversal
+  - lowvol    # low 12-month vol
+  - mr5       # 5-month mean reversion
+
+# Turnover penalty sweep — 12 grid points from aggressive to frozen.
+penalty_grid: [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.60, 0.80, 1.00]
+
+# Cost multiplier sweep (held at baseline penalty 0.25).
+cost_multipliers: [0.5, 1.0, 1.5, 2.0, 3.0, 5.0]
+
+# Baseline cost config. Multiplied by cost_multipliers above.
+baseline_cost:
+  commission_bps: 1.0
+  spread_bps: 5.0
+  impact_coeff: 0.3
+  turnover_penalty: 0.25
+
+# Quintile width. With 10 ETFs and 0.2, each sleeve holds 2 ETFs.
+quantile: 0.2
+
+# Autocorrelation lags to compute (months).
+acf_lags: 12

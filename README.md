@@ -14,10 +14,33 @@ This repository documents the research methodology and empirical findings behind
 Public profile of the Quantitative Portfolio Manager role — mandate, strategy families, portfolio-construction framework, and risk methodology. No live P&L, account data, or signal parameters.
 
 ### `research/`
-Empirical writeups — research question, method, findings, implications.
+**Fourteen reproducible empirical studies** — each shipped as a
+self-contained folder with `run.py`, `config.yaml`, `signals.py`,
+`expected_output.json`, and a human-readable `README.md` covering the
+research question, method, and findings.
 
-- [`01_cost_robust_portfolio.md`](research/01_cost_robust_portfolio.md) — **Transaction-Cost–Aware Portfolio Construction.** How high-turnover weighting schemes collapse under realistic execution costs, and why cost-adjusted EWMA Sharpe should be the portfolio-selection criterion.
-- [`02_cross_asset_alpha.md`](research/02_cross_asset_alpha.md) — **Systematic Alpha Validation Across Asset Classes.** Walk-forward validation of momentum, reversal, and microstructure signals across equities, Treasuries, gold, and crypto; cross-sectional vs. temporal edges in crypto.
+See [`research/README.md`](research/README.md) for the full catalogue,
+reproducibility protocol, and shared infrastructure (`_core/` backtest
+primitives and `_data/` public fetchers).
+
+**Phase 1 — reproducible now:**
+
+- [`01_signal_decay_vs_cost`](research/01_signal_decay_vs_cost/) —
+  **Signal Decay vs Transaction Cost.** How a signal's persistence
+  determines its maximum tolerable cost budget; demonstrated on 10
+  sector ETFs (yfinance) with an optional WRDS CRSP backend.
+- [`10_cn_factors`](research/10_cn_factors/) —
+  **A-Share Factor Proxies.** Five long-short factor proxies built from
+  public style indices via `akshare`; full regime analysis and
+  cross-market correlation to US.
+- [`12_industry_rotation`](research/12_industry_rotation/) —
+  **Industry Rotation via Ken French.** 12-month industry momentum L/S
+  plus reference OP / INV / decile-spread premia, all from the public
+  Dartmouth data library.
+
+Each study runs in ~30 seconds, produces a JSON output, and diffs
+against a committed `expected_output.json` to catch drift. Phase 2
+(the remaining 11 studies) is in progress.
 
 ### `methodology/`
 Framework documents — strategy whitepaper, audit protocol, data-source catalog, and the strategy-review checklist used as a pre-deployment gate.

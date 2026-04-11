@@ -10,3 +10,9 @@ cache/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Research — regenerated on every run
+research/data_cache/
+research/**/sample_output/
+# ...but keep the expected_output.json reference files versioned
+!research/**/expected_output.json
