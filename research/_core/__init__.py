@@ -17,6 +17,12 @@ from research._core.metrics import compute_metrics, split_is_oos, rolling_window
 from research._core.costs import apply_turnover_cost, CostConfig
 from research._core.backtest import long_short_quintile_backtest
 from research._core.data_loader import load_returns_panel
+from research._core.stats import (
+    ff5_regression,
+    correlation_matrix,
+    rolling_vol,
+    blend_factors,
+)
 
 __all__ = [
     "compute_metrics",
@@ -26,4 +32,8 @@ __all__ = [
     "CostConfig",
     "long_short_quintile_backtest",
     "load_returns_panel",
+    "ff5_regression",
+    "correlation_matrix",
+    "rolling_vol",
+    "blend_factors",
 ]

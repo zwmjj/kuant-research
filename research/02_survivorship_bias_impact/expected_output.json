@@ -1,0 +1,144 @@
+{
+  "config": {
+    "n_assets": 50,
+    "n_months": 240,
+    "n_delistings": 19
+  },
+  "delistings": [
+    {
+      "asset": "A000",
+      "month": 126,
+      "date": "2015-07-31T00:00:00",
+      "terminal_return": -0.29564226701693885
+    },
+    {
+      "asset": "A004",
+      "month": 85,
+      "date": "2012-02-29T00:00:00",
+      "terminal_return": -0.35502217514367895
+    },
+    {
+      "asset": "A008",
+      "month": 164,
+      "date": "2018-09-30T00:00:00",
+      "terminal_return": -0.18849703756192937
+    },
+    {
+      "asset": "A010",
+      "month": 226,
+      "date": "2023-11-30T00:00:00",
+      "terminal_return": -0.18102899973503953
+    },
+    {
+      "asset": "A014",
+      "month": 181,
+      "date": "2020-02-29T00:00:00",
+      "terminal_return": -0.30145899104281143
+    },
+    {
+      "asset": "A017",
+      "month": 81,
+      "date": "2011-10-31T00:00:00",
+      "terminal_return": -0.17772265125176856
+    },
+    {
+      "asset": "A018",
+      "month": 218,
+      "date": "2023-03-31T00:00:00",
+      "terminal_return": -0.3620470788314261
+    },
+    {
+      "asset": "A019",
+      "month": 37,
+      "date": "2008-02-29T00:00:00",
+      "terminal_return": -0.3939173032096112
+    },
+    {
+      "asset": "A021",
+      "month": 95,
+      "date": "2012-12-31T00:00:00",
+      "terminal_return": -0.4813802347082869
+    },
+    {
+      "asset": "A022",
+      "month": 26,
+      "date": "2007-03-31T00:00:00",
+      "terminal_return": -0.17305035067939098
+    },
+    {
+      "asset": "A026",
+      "month": 79,
+      "date": "2011-08-31T00:00:00",
+      "terminal_return": -0.41597562152110956
+    },
+    {
+      "asset": "A028",
+      "month": 232,
+      "date": "2024-05-31T00:00:00",
+      "terminal_return": -0.3145326959854438
+    },
+    {
+      "asset": "A029",
+      "month": 27,
+      "date": "2007-04-30T00:00:00",
+      "terminal_return": -0.267475230073481
+    },
+    {
+      "asset": "A033",
+      "month": 60,
+      "date": "2010-01-31T00:00:00",
+      "terminal_return": -0.24939409795069653
+    },
+    {
+      "asset": "A038",
+      "month": 106,
+      "date": "2013-11-30T00:00:00",
+      "terminal_return": -0.22606191159609856
+    },
+    {
+      "asset": "A039",
+      "month": 93,
+      "date": "2012-10-31T00:00:00",
+      "terminal_return": -0.2843700728063783
+    },
+    {
+      "asset": "A041",
+      "month": 79,
+      "date": "2011-08-31T00:00:00",
+      "terminal_return": -0.4191976825952955
+    },
+    {
+      "asset": "A043",
+      "month": 103,
+      "date": "2013-08-31T00:00:00",
+      "terminal_return": -0.3115766187370575
+    },
+    {
+      "asset": "A048",
+      "month": 136,
+      "date": "2016-05-31T00:00:00",
+      "terminal_return": -0.26541008537258304
+    }
+  ],
+  "survivors_only": {
+    "n_periods": 240,
+    "total_return": 0.153062,
+    "cagr": 0.007146,
+    "sharpe": 0.1208,
+    "sortino": 0.216,
+    "max_drawdown": -0.430762,
+    "vol": 0.142443,
+    "win_rate": 0.4792
+  },
+  "full_delist_adjusted": {
+    "n_periods": 240,
+    "total_return": -0.114981,
+    "cagr": -0.006089,
+    "sharpe": -0.0137,
+    "sortino": -0.0219,
+    "max_drawdown": -0.330665,
+    "vol": 0.097659,
+    "win_rate": 0.4792
+  },
+  "survivorship_bias_sharpe_gap": 0.1345
+}

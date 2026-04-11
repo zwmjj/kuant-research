@@ -1,0 +1,26 @@
+# New factors: macro-conditioned signals on sector ETFs.
+# FRED macros (VIX, 10Y-2Y curve, DGS10, unemployment) used as
+# regime conditioners and as direct predictors.
+
+universe: [XLK, XLF, XLE, XLV, XLY, XLP, XLI, XLB, XLU, XLRE]
+start_date: "2015-12-31"
+end_date:   "2025-12-31"
+
+# FRED series to pull
+fred_series:
+  - VIXCLS          # VIX daily
+  - DGS10           # 10-year Treasury yield
+  - T10Y2Y          # yield curve slope
+  - UNRATE          # unemployment rate
+
+signals:
+  - vix_regime      # 12m rvol premium, conditioned on VIX regime
+  - curve_signal    # curve slope change as a directional signal
+  - macro_blend     # z-score blend of all 4 macro variables
+
+quantile: 0.25
+baseline_cost:
+  commission_bps: 1.0
+  spread_bps: 5.0
+  impact_coeff: 0.3
+  turnover_penalty: 0.25

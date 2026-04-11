@@ -1,0 +1,40 @@
+# Execution model study — sensitivity of Sharpe to cost assumptions.
+
+universe: [XLK, XLF, XLE, XLV, XLY, XLP, XLI, XLB, XLU, XLRE]
+start_date: "2015-12-31"
+end_date:   "2025-12-31"
+
+signals: [mom12, mom1, lowvol, mr5]
+quantile: 0.2
+turnover_penalty: 0.25
+
+# Cost scenarios — each row is a full CostConfig variant.
+scenarios:
+  - name: "no_cost"
+    commission_bps: 0.0
+    spread_bps: 0.0
+    impact_coeff: 0.0
+  - name: "commission_only"
+    commission_bps: 1.0
+    spread_bps: 0.0
+    impact_coeff: 0.0
+  - name: "retail_flat"
+    commission_bps: 1.0
+    spread_bps: 5.0
+    impact_coeff: 0.0
+  - name: "institutional"
+    commission_bps: 0.5
+    spread_bps: 2.0
+    impact_coeff: 0.3
+  - name: "retail_full"
+    commission_bps: 1.0
+    spread_bps: 5.0
+    impact_coeff: 0.3
+  - name: "stressed"
+    commission_bps: 2.0
+    spread_bps: 10.0
+    impact_coeff: 0.6
+  - name: "crisis"
+    commission_bps: 5.0
+    spread_bps: 20.0
+    impact_coeff: 1.0

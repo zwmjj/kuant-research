@@ -29,27 +29,45 @@ Legend:
 - 🔴 **Tier C** — WRDS CRSP/Compustat required. Public fallback not yet
   implemented.
 
-| # | Study | Category | Tier | Status |
-|---|-------|----------|------|--------|
-| 01 | [Signal Decay vs Transaction Cost](01_signal_decay_vs_cost/) | Execution | 🟡 | ✅ |
-| 02 | Survivorship Bias Impact | Data Quality | 🔴 | 📋 planned |
-| 03 | Factor Crowding | Factor Research | 🔴 | 📋 planned |
-| 04 | Regime Timing | Portfolio Construction | 🔴 | 📋 planned |
-| 05 | Multi-Factor Construction | Portfolio Construction | 🔴 | 📋 planned |
-| 06 | Execution Model Limitations | Execution | 🔴 | 📋 planned |
-| 07 | Optimization Diminishing Returns | Portfolio Construction | 🔴 | 📋 planned |
-| 08 | IS vs OOS Stability | Validation | 🔴 | 📋 planned |
-| 09 | Equity Vol Factors | Factor Research | 🔴 | 📋 planned |
-| 10 | [A-Share Factor Proxies](10_cn_factors/) | A-Share / Cross-Market | 🟢 | ✅ |
-| 11 | Cross-Market Robustness (US vs CN) | Cross-Market | 🟡 | 📋 planned |
-| 12 | [Industry Rotation](12_industry_rotation/) | Sector | 🟢 | ✅ |
-| 13 | New Factors (Daily + Macro) | Factor Research | 🔴 | 📋 planned |
-| 14 | HK Equity Factors | HK / Cross-Market | 🔴 | 📋 planned |
+| # | Study | Category | Tier | Status | Headline finding |
+|---|-------|----------|------|--------|-------------------|
+| 01 | [Signal Decay vs Transaction Cost](01_signal_decay_vs_cost/) | Execution | 🟡 | ✅ | `mr5` most cost-robust; `mom12` best frozen |
+| 02 | [Survivorship Bias Impact](02_survivorship_bias_impact/) | Data Quality | ⚫ synth | ✅ | +0.135 Sharpe bias from naive filter |
+| 03 | [Factor Crowding](03_factor_crowding/) | Factor Research | 🟡 | ✅ | `mr5` only signal with positive α (not significant) |
+| 04 | [Regime Timing](04_regime_timing/) | Portfolio Construction | 🟢 | ✅ | **`mr5`+`risk_on_only` Sharpe 0.69** ⭐ book champion |
+| 05 | [Multi-Factor Construction](05_multifactor_construction/) | Portfolio Construction | 🟡 | ✅ | Best 3-blend 0.58 > any pair 0.46 > any single 0.39 |
+| 06 | [Execution Model](06_execution_model/) | Execution | 🟡 | ✅ | `mom1` loses 81% of Sharpe in crisis costs |
+| 07 | [Optimization Diminishing Returns](07_optimization_diminishing/) | Portfolio Construction | 🟡 | ✅ | **`max_sharpe` trap**: +0.25 SR, −94% MDD |
+| 08 | [IS vs OOS Stability](08_is_oos_stability/) | Validation | 🟡 | ✅ | `mr5` only signal that generalizes (IS 0.32 → OOS 0.41) |
+| 09 | [Equity Vol Factors](09_equity_vol_factors/) | Factor Research | 🟡 | ✅ | All 5 vol factors lose cross-asset (wrong universe) |
+| 10 | [A-Share Factor Proxies](10_cn_factors/) | A-Share / Cross-Market | 🟢 | ✅ | SMB_CN IS=0.04 → OOS=0.53; HML_CN regime-dependent |
+| 11 | [Cross-Market Robustness (US vs CN)](11_cross_market_robustness/) | Cross-Market | 🟡 | ✅ | 3/4 signals sign-agree US vs CN; cross-corr ≈ 0 |
+| 12 | [Industry Rotation](12_industry_rotation/) | Sector | 🟢 | ✅ | Industry mom Sharpe 0.24 stable IS/OOS; OP prem 0.47 |
+| 13 | [New Factors (FRED Macro)](13_new_factors/) | Factor Research | 🟡 | ✅ | Macro conditioners amplify overfitting post-2020 |
+| 14 | [HK Equity Factors](14_hk_factors/) | HK / Cross-Market | 🟢 | ✅ | `mom12` +0.38 (strongest in book); `mr5` breaks on HK |
 
-**Phase 1 (current)**: 3 reproducible studies covering the three data
-tiers — see `01_signal_decay_vs_cost`, `10_cn_factors`,
-`12_industry_rotation`. Phase 2 will port the remaining 11 using the
-same template.
+**All 14 studies shipped.** Every folder contains `README.md`,
+`run.py`, `config.yaml`, `signals.py`, `requirements.txt`,
+`data_contract.md`, `expected_output.json` — seven-file uniform
+template with reproducibility gate.
+
+### Cross-study meta-findings
+
+The `mr5` (5-month z-scored mean reversion) signal wins **4 of 5**
+studies where it appears as a candidate, and the one where it breaks
+(HK single-stocks in #14) narrows the domain rather than invalidating
+the finding. The single best deployment recipe the whole research
+book supports is **`mr5` + `risk_on_only` VIX regime filter** on
+sector ETFs, producing a Sharpe of 0.69 and MDD of only −4.8% —
+the best risk-adjusted result in the catalogue.
+
+The research book also produces several strong **negative findings**
+that should influence deployment decisions: `max_sharpe` portfolio
+optimization destroys capital despite a positive Sharpe (#07);
+macro-conditioned signals are overfitting amplifiers on small samples
+(#13); vol-based factors fail on cross-asset ETF universes (#09);
+naive survivorship-biased backtests inflate Sharpe by ~0.15 units
+(#02).
 
 ## Template
 

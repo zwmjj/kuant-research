@@ -1,0 +1,17 @@
+# Does more sophisticated portfolio optimization actually help?
+
+universe: [XLK, XLF, XLE, XLV, XLY, XLP, XLI, XLB, XLU, XLRE]
+start_date: "2015-12-31"
+end_date:   "2025-12-31"
+
+signals: [mom12, mom1, lowvol, mr5]
+
+# Methods to compare — all applied to the same 4 signal return streams
+methods:
+  - equal_weight
+  - inverse_vol
+  - minimum_variance
+  - max_sharpe
+
+# Rolling window size for covariance / mean estimation (months)
+lookback: 24

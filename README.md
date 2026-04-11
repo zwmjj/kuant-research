@@ -23,24 +23,28 @@ See [`research/README.md`](research/README.md) for the full catalogue,
 reproducibility protocol, and shared infrastructure (`_core/` backtest
 primitives and `_data/` public fetchers).
 
-**Phase 1 — reproducible now:**
+**All 14 studies shipped and reproducible.** See
+[`research/README.md`](research/README.md) for the full catalogue with
+one-line headline findings per study, cross-study meta-findings, and
+the shared `_core/` / `_data/` infrastructure.
 
-- [`01_signal_decay_vs_cost`](research/01_signal_decay_vs_cost/) —
-  **Signal Decay vs Transaction Cost.** How a signal's persistence
-  determines its maximum tolerable cost budget; demonstrated on 10
-  sector ETFs (yfinance) with an optional WRDS CRSP backend.
-- [`10_cn_factors`](research/10_cn_factors/) —
-  **A-Share Factor Proxies.** Five long-short factor proxies built from
-  public style indices via `akshare`; full regime analysis and
-  cross-market correlation to US.
-- [`12_industry_rotation`](research/12_industry_rotation/) —
-  **Industry Rotation via Ken French.** 12-month industry momentum L/S
-  plus reference OP / INV / decile-spread premia, all from the public
-  Dartmouth data library.
+Highlights:
 
-Each study runs in ~30 seconds, produces a JSON output, and diffs
-against a committed `expected_output.json` to catch drift. Phase 2
-(the remaining 11 studies) is in progress.
+- [`04_regime_timing`](research/04_regime_timing/) — **`mr5` + VIX
+  regime filter = Sharpe 0.69, MDD −4.8%.** Best risk-adjusted result
+  in the whole book, from public data only.
+- [`07_optimization_diminishing`](research/07_optimization_diminishing/) —
+  The **`max_sharpe` trap**: unconstrained tangency portfolios report
+  +0.25 Sharpe while actually destroying capital (−94% MDD, −16% CAGR)
+  via volatility drag.
+- [`02_survivorship_bias_impact`](research/02_survivorship_bias_impact/) —
+  Synthetic demonstration that a naïve survivorship-biased backtest
+  inflates Sharpe by **+0.13 units**, matching the +0.15 reference
+  from the WRDS CRSP version in the main Kuant platform.
+
+Every study runs in <60 seconds from a fresh clone, produces
+`sample_output/results.json`, and diffs against a committed
+`expected_output.json` to catch drift on any re-run.
 
 ### `methodology/`
 Framework documents — strategy whitepaper, audit protocol, data-source catalog, and the strategy-review checklist used as a pre-deployment gate.

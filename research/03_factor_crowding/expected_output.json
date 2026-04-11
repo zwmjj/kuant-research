@@ -1,0 +1,138 @@
+{
+  "config": {
+    "universe_size": 10,
+    "n_months": 120
+  },
+  "signals": {
+    "mom12": {
+      "performance": {
+        "n_periods": 120,
+        "total_return": -0.446539,
+        "cagr": -0.057441,
+        "sharpe": -0.2556,
+        "sortino": -0.3508,
+        "max_drawdown": -0.494537,
+        "vol": 0.172417,
+        "win_rate": 0.45
+      },
+      "ff5_regression": {
+        "alpha": -0.040884,
+        "alpha_monthly": -0.003407,
+        "alpha_t": -0.7817,
+        "beta_mkt": -0.1196,
+        "beta_smb": -0.4141,
+        "beta_hml": -0.2603,
+        "beta_rmw": -0.4244,
+        "beta_cma": 0.6892,
+        "r2": 0.1941,
+        "n": 120
+      }
+    },
+    "mom1": {
+      "performance": {
+        "n_periods": 120,
+        "total_return": 0.331464,
+        "cagr": 0.029042,
+        "sharpe": 0.2604,
+        "sortino": 0.3089,
+        "max_drawdown": -0.391348,
+        "vol": 0.161223,
+        "win_rate": 0.5833
+      },
+      "ff5_regression": {
+        "alpha": -0.000101,
+        "alpha_monthly": -8e-06,
+        "alpha_t": -0.0019,
+        "beta_mkt": 0.2165,
+        "beta_smb": -0.014,
+        "beta_hml": -0.0038,
+        "beta_rmw": -0.1767,
+        "beta_cma": 0.1575,
+        "r2": 0.0468,
+        "n": 120
+      }
+    },
+    "lowvol": {
+      "performance": {
+        "n_periods": 120,
+        "total_return": -0.437375,
+        "cagr": -0.055891,
+        "sharpe": -0.2654,
+        "sortino": -0.3382,
+        "max_drawdown": -0.627064,
+        "vol": 0.164429,
+        "win_rate": 0.3917
+      },
+      "ff5_regression": {
+        "alpha": -0.039279,
+        "alpha_monthly": -0.003273,
+        "alpha_t": -0.9118,
+        "beta_mkt": -0.3544,
+        "beta_smb": -0.1955,
+        "beta_hml": -0.5443,
+        "beta_rmw": 0.4082,
+        "beta_cma": 0.1731,
+        "r2": 0.3966,
+        "n": 120
+      }
+    },
+    "mr5": {
+      "performance": {
+        "n_periods": 120,
+        "total_return": 0.529393,
+        "cagr": 0.043403,
+        "sharpe": 0.3678,
+        "sortino": 0.4524,
+        "max_drawdown": -0.257983,
+        "vol": 0.144181,
+        "win_rate": 0.45
+      },
+      "ff5_regression": {
+        "alpha": 0.013399,
+        "alpha_monthly": 0.001117,
+        "alpha_t": 0.2833,
+        "beta_mkt": 0.1599,
+        "beta_smb": -0.0313,
+        "beta_hml": -0.1952,
+        "beta_rmw": -0.0406,
+        "beta_cma": 0.3808,
+        "r2": 0.0451,
+        "n": 120
+      }
+    }
+  },
+  "strategy_correlation": {
+    "labels": [
+      "mom12",
+      "mom1",
+      "lowvol",
+      "mr5"
+    ],
+    "values": [
+      [
+        1.0,
+        -0.2162,
+        0.3307,
+        0.0071
+      ],
+      [
+        -0.2162,
+        1.0,
+        -0.0827,
+        0.4218
+      ],
+      [
+        0.3307,
+        -0.0827,
+        1.0,
+        0.045
+      ],
+      [
+        0.0071,
+        0.4218,
+        0.045,
+        1.0
+      ]
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+# US vs China factor robustness.
+# We run the same 4 reference signals on two universes in parallel:
+#   - US:  10 SPDR sector ETFs (yfinance, monthly)
+#   - CN:  8 A-share style indices (akshare, monthly)
+# and then compute Sharpe + IS/OOS + correlation of the return streams.
+
+us_universe:
+  [XLK, XLF, XLE, XLV, XLY, XLP, XLI, XLB, XLU, XLRE]
+
+cn_indices:
+  CSI300:   "sh000300"
+  CSI500:   "sh000905"
+  CSI1000:  "sh000852"
+  GEM:      "sz399006"
+  Value:    "sh000029"
+  Growth:   "sh000030"
+  Dividend: "sh000922"
+  LowVol:   "sh000803"
+
+start_date: "2015-12-31"
+end_date:   "2025-12-31"
+is_oos_split: "2020-12-31"
+
+signals: [mom12, mom1, lowvol, mr5]
+quantile: 0.25
+
+baseline_cost:
+  commission_bps: 1.0
+  spread_bps: 5.0
+  impact_coeff: 0.3
+  turnover_penalty: 0.25

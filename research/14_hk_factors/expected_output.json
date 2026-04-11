@@ -1,0 +1,148 @@
+{
+  "config": {
+    "n_months": 120,
+    "n_assets": 12
+  },
+  "signals": {
+    "mom12": {
+      "full": {
+        "n_periods": 120,
+        "total_return": 0.765956,
+        "cagr": 0.058517,
+        "sharpe": 0.3786,
+        "sortino": 0.5066,
+        "max_drawdown": -0.403003,
+        "vol": 0.209381,
+        "win_rate": 0.5083
+      },
+      "is_oos": {
+        "split_date": "2020-12-31",
+        "is": {
+          "n_periods": 60,
+          "total_return": 0.850459,
+          "cagr": 0.130983,
+          "sharpe": 0.8166,
+          "sortino": 1.1176,
+          "max_drawdown": -0.326901,
+          "vol": 0.168648,
+          "win_rate": 0.4833
+        },
+        "oos": {
+          "n_periods": 60,
+          "total_return": -0.045666,
+          "cagr": -0.009305,
+          "sharpe": 0.0854,
+          "sortino": 0.1212,
+          "max_drawdown": -0.403003,
+          "vol": 0.243727,
+          "win_rate": 0.5333
+        }
+      }
+    },
+    "mom1": {
+      "full": {
+        "n_periods": 120,
+        "total_return": -0.187237,
+        "cagr": -0.020518,
+        "sharpe": -0.0195,
+        "sortino": -0.0328,
+        "max_drawdown": -0.590609,
+        "vol": 0.186738,
+        "win_rate": 0.5
+      },
+      "is_oos": {
+        "split_date": "2020-12-31",
+        "is": {
+          "n_periods": 60,
+          "total_return": -0.487351,
+          "cagr": -0.125089,
+          "sharpe": -0.8298,
+          "sortino": -1.133,
+          "max_drawdown": -0.590609,
+          "vol": 0.147111,
+          "win_rate": 0.4167
+        },
+        "oos": {
+          "n_periods": 60,
+          "total_return": 0.585418,
+          "cagr": 0.096551,
+          "sharpe": 0.5334,
+          "sortino": 0.9858,
+          "max_drawdown": -0.236539,
+          "vol": 0.215209,
+          "win_rate": 0.5833
+        }
+      }
+    },
+    "lowvol": {
+      "full": {
+        "n_periods": 120,
+        "total_return": -0.416902,
+        "cagr": -0.052511,
+        "sharpe": -0.1599,
+        "sortino": -0.2036,
+        "max_drawdown": -0.506888,
+        "vol": 0.203626,
+        "win_rate": 0.45
+      },
+      "is_oos": {
+        "split_date": "2020-12-31",
+        "is": {
+          "n_periods": 60,
+          "total_return": -0.452565,
+          "cagr": -0.113525,
+          "sharpe": -0.6471,
+          "sortino": -0.9661,
+          "max_drawdown": -0.455118,
+          "vol": 0.164591,
+          "win_rate": 0.3167
+        },
+        "oos": {
+          "n_periods": 60,
+          "total_return": 0.065145,
+          "cagr": 0.012702,
+          "sharpe": 0.1755,
+          "sortino": 0.2036,
+          "max_drawdown": -0.294328,
+          "vol": 0.235824,
+          "win_rate": 0.5833
+        }
+      }
+    },
+    "mr5": {
+      "full": {
+        "n_periods": 120,
+        "total_return": -0.389208,
+        "cagr": -0.048104,
+        "sharpe": -0.2363,
+        "sortino": -0.3709,
+        "max_drawdown": -0.683269,
+        "vol": 0.156381,
+        "win_rate": 0.45
+      },
+      "is_oos": {
+        "split_date": "2020-12-31",
+        "is": {
+          "n_periods": 60,
+          "total_return": -0.377306,
+          "cagr": -0.090391,
+          "sharpe": -0.6336,
+          "sortino": -0.75,
+          "max_drawdown": -0.416863,
+          "vol": 0.134469,
+          "win_rate": 0.35
+        },
+        "oos": {
+          "n_periods": 60,
+          "total_return": -0.019113,
+          "cagr": -0.003852,
+          "sharpe": 0.0643,
+          "sortino": 0.128,
+          "max_drawdown": -0.509219,
+          "vol": 0.175636,
+          "win_rate": 0.55
+        }
+      }
+    }
+  }
+}
