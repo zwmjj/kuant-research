@@ -108,4 +108,3 @@ sample_output/        — regenerated on each run
 
 Data:    Kenneth R. French Data Library, Tuck School of Business,
          Dartmouth College — public domain.
-Code:    See repository LICENSE.
