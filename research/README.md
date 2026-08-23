@@ -26,8 +26,9 @@ Legend:
 - 🟡 **Tier B** — default-public with a WRDS hook for institutional
   reproduction. Runs out-of-the-box on a public fallback universe; point
   `--source wrds` at CRSP for the full version.
-- 🔴 **Tier C** — WRDS CRSP/Compustat required. Public fallback not yet
-  implemented.
+- ⚫ **Synthetic** — no market data at all; the panel is generated
+  in-repo from a pinned seed to isolate one mechanism under a known
+  data-generating process.
 
 | # | Study | Category | Tier | Status | Headline finding |
 |---|-------|----------|------|--------|-------------------|
@@ -53,11 +54,18 @@ template with reproducibility gate.
 
 ### Cross-study meta-findings
 
-The `mr5` (5-month z-scored mean reversion) signal wins **4 of 5**
-studies where it appears as a candidate, and the one where it breaks
-(HK single-stocks in #14) narrows the domain rather than invalidating
-the finding. The single best deployment recipe the whole research
-book supports is **`mr5` + `risk_on_only` VIX regime filter** on
+The `mr5` (5-month z-scored mean reversion) signal appears as a candidate
+in eight studies (#01, #03, #04, #05, #06, #08, #11, #14) and is the
+strongest of the four candidates in six of them (#03, #05, #06, #08, and
+both #04 and the U.S. panel of #11). The three qualifications matter as
+much as the count: in #01 it is *not* the highest-Sharpe signal — `mom1`
+is — but it is the only one whose Sharpe *rises* as the cost penalty rises,
+which is what "cost-robust" means here; in the A-share panel of #11 it
+finishes second to `mom1` by 0.01 of Sharpe; and in #14 it fails outright
+on HK single stocks, the worst of the four. The HK failure narrows the
+domain rather than invalidating the finding, but it is a failure.
+
+The single best deployment recipe the whole research book supports is **`mr5` + `risk_on_only` VIX regime filter** on
 sector ETFs, producing a Sharpe of 0.69 and MDD of only −4.8% —
 the best risk-adjusted result in the catalogue.
 
@@ -66,8 +74,8 @@ that should influence deployment decisions: `max_sharpe` portfolio
 optimization destroys capital despite a positive Sharpe (#07);
 macro-conditioned signals are overfitting amplifiers on small samples
 (#13); vol-based factors fail on cross-asset ETF universes (#09);
-naive survivorship-biased backtests inflate Sharpe by ~0.15 units
-(#02).
+naive survivorship-biased backtests inflate Sharpe by +0.135 units
+on a synthetic panel (#02).
 
 ## Template
 
@@ -117,7 +125,7 @@ from research._core import (
 )
 ```
 
-Intentionally small (~400 lines total). Everything is keyed off a
+Intentionally small (517 lines total). Everything is keyed off a
 returns-matrix input contract — if you have a DataFrame of periodic
 returns, you have enough to run any study's backtest.
 
@@ -154,10 +162,11 @@ backends. You opt into the full version with a command-line flag:
 
     python run.py --source wrds   # requires WRDS_USERNAME / WRDS_PASSWORD
 
-**🔴 Tier C studies** — depend on CRSP delisting-adjusted returns or
-Compustat fundamentals. For now, these are stubs — running them
-without WRDS credentials will print a clear error telling you what's
-missing. They will be re-tiered to 🟡 as Phase 2 adds public fallbacks.
+**⚫ Synthetic studies** — study 02 uses no market data. Its panel is
+generated in-repo from a pinned seed, calibrated to a stated delisting
+rate, so the mechanism it measures is separated from any question about
+data quality. It measures the size and direction of the bias under a
+known process; it does not measure the historical U.S. bias.
 
 ## How to add a new study
 
@@ -173,8 +182,11 @@ for any study in the catalogue, on any machine with network access.
 
 ## Reproducibility philosophy
 
-- **Walk-forward first.** Every study splits IS/OOS at 2020-12-31 by
-  default so cross-study numbers compare cleanly.
+- **One split date, stated up front.** Studies that report an IS/OOS
+  split use 2020-12-31 so cross-study numbers compare cleanly (#05, #08,
+  #10, #11, #12, #14). Studies #01, #03, #04, #06 and #07 report
+  full-sample statistics — they sweep a parameter rather than test
+  generalisation — and say so in their own README.
 - **Costs are a first-class citizen.** The `_core/costs.py` module is
   shared across every study that does a backtest; cost sensitivity is
   always in the output.
@@ -188,7 +200,6 @@ for any study in the catalogue, on any machine with network access.
 
 ## License and data terms
 
-- Code: see repository `LICENSE`.
 - Kenneth French data: free for academic and research use.
 - akshare: free scraper of public Sina/Tencent data.
 - yfinance: free scraper of Yahoo Finance (best-effort, terms of service
