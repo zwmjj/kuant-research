@@ -36,7 +36,14 @@ $PY tools/rerun_and_diff.py
 
 echo
 echo "=============================================="
-echo " 4. optional: is there a fix for study 10's hole?"
+echo " 4. optional: does the CRSP backend actually run?"
+echo "=============================================="
+echo " (skipped unless WRDS_USERNAME / WRDS_PASSWORD are set)"
+$PY tools/smoke_test_wrds.py || true
+
+echo
+echo "=============================================="
+echo " 5. optional: is there a fix for study 10's hole?"
 echo "=============================================="
 $PY tools/probe_cn_alternatives.py || true
 
