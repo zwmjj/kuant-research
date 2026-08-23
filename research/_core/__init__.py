@@ -8,9 +8,9 @@ cross-sectional backtest on a returns matrix:
     costs       — simple proportional + sqrt-impact cost model
     data_loader — three data sources: cached pickle, yfinance, CSV
 
-Everything here is intentionally standalone — no qf/ imports, so a user can
-clone this repo, `pip install -r requirements.txt`, and run any study
-without needing the wider Kuant platform.
+Everything here is intentionally standalone — no imports outside this
+package, so a reader can clone the repo, `pip install -r requirements.txt`,
+and run any study without any other codebase present.
 """
 
 from research._core.metrics import compute_metrics, split_is_oos, rolling_windows
