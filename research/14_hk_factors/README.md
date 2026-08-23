@@ -79,9 +79,10 @@ ETF panel), which means:
 - 12 names is half the width of the A-share index panel in study 10,
   further reducing the reliability of quintile ranks
 
-**Conclusion**: `mr5`'s edge is more fragile than 5-out-of-6 studies
-suggested. It's still the most consistent winner across *aggregate*
-(ETF/index) universes, but breaks down on narrow single-stock panels.
+**Conclusion**: `mr5`'s edge is more fragile than the six studies where
+it came out strongest suggested. It's still the most consistent winner
+across *aggregate* (ETF/index) universes, but breaks down on narrow
+single-stock panels.
 
 ### `mom12` is the HK champion
 
