@@ -1,9 +1,9 @@
 # Survivorship bias — synthetic demonstration of methodology.
 #
 # This study is the only one in the research book that CANNOT be
-# fully reproduced from public data. The real version (in the main
-# Kuant platform, quant/qf/data.py) uses WRDS CRSP with 8,446
-# delisting returns applied from the Shumway 1997 methodology.
+# fully reproduced from public data: measuring the real bias needs the
+# CRSP delisting file and a Shumway (1997) adjustment pass over it,
+# which requires a WRDS subscription this repository does not ship.
 #
 # Here we reproduce the *methodology* on synthetic data: we generate a
 # universe of returns, deliberately delist a subset of assets with a
