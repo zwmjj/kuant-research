@@ -2,13 +2,13 @@
 
 Independent quantitative research on systematic multi-asset portfolio construction, signal validation, and execution-cost-aware alpha selection.
 
-This repository documents the research methodology and empirical findings behind a 14-strategy multi-asset systematic book spanning U.S./HK equities, U.S. Treasuries, commodities, G10 FX, and liquid crypto majors — covering trend-following, dual/cross-asset momentum, mean reversion, and macro-regime signals.
+This repository documents the research methodology and empirical findings behind a 14-strategy multi-asset systematic book spanning U.S., U.K., Hong Kong and Korean equity indices, U.S. Treasuries, commodities, G10 FX, and liquid crypto majors — covering trend-following, dual/cross-asset momentum, mean reversion, and macro-regime signals.
 
 **Scope of this repository.** A partial, sanitized view of a larger private research and trading stack. `research/` holds fourteen reproducible offline studies on public data — methodology studies, not the traded strategies. `results/` holds sanitized selection-stage output for the 14 deployed sleeves. Live trading code, execution adapters, credentials, account data, and proprietary signal parameters are intentionally excluded.
 
 **Published figures describe the paper-traded configuration, not the live one.** The live book runs a modified version of these strategies; those modifications, and the resulting live performance, are not published. Any performance figure in this repository belongs to the paper/validation track — it is not the realised result of the live account, and the two are expected to differ.
 
-**Sharpe conventions.** Published research figures are computed net of modelled transaction costs (commission, bid-ask spread, square-root market impact) and gross of volatility targeting and drawdown control. Those overlays are used in live risk management but are excluded from reported research Sharpes, because they redistribute leverage rather than create alpha.
+**Sharpe conventions.** Published research figures are computed net of modelled transaction costs (commission, bid-ask spread, square-root market impact) and gross of volatility targeting and drawdown control. Those overlays are used in live risk management but are excluded from reported research Sharpes, because they redistribute leverage rather than create alpha. Reported Sharpe ratios are return-to-volatility ratios computed **gross of the risk-free rate** (annualised return ÷ annualised volatility, no risk-free deduction). On the deployed configuration this is 20.8 / 9.2 = 2.26; deducting a 4% risk-free rate would give 1.83. The same convention is applied consistently across every study in this repository, so cross-study comparisons are unaffected.
 
 **Capital.** A personal, self-funded account. No external or client capital is managed. Paper trading from August 2025; live since September 2025.
 
@@ -45,24 +45,24 @@ Highlights:
   via volatility drag.
 - [`02_survivorship_bias_impact`](research/02_survivorship_bias_impact/) —
   Synthetic demonstration that a naïve survivorship-biased backtest
-  inflates Sharpe by **+0.13 units**, matching the +0.15 reference
-  from the WRDS CRSP version in the main Kuant platform.
+  inflates Sharpe by **+0.135 units** on a synthetic panel calibrated
+  to a 2.4%/year delisting rate.
 
 Every study runs in <60 seconds from a fresh clone, produces
 `sample_output/results.json`, and diffs against a committed
 `expected_output.json` to catch drift on any re-run.
 
 ### `methodology/`
-Framework documents — strategy whitepaper, audit protocol, data-source catalog, and the strategy-review checklist used as a pre-deployment gate.
+Framework documents — the strategy whitepaper and the data-source catalogue.
 
-### `results/`
-Sanitized outputs — final portfolio configuration and optimal weights from the walk-forward selection stage. No live P&L or account data.
+### [`results/`](results/)
+Sanitized selection-stage outputs — the deployed portfolio configuration and the unconstrained max-Sharpe artefact it was chosen *over*. No live P&L or account data. See [`results/README.md`](results/README.md) for what each field means and why the higher-Sharpe solution was not deployed.
 
 ---
 
 ## Research Principles
 
-1. **Walk-forward first.** Every result reported here is out-of-sample under a walk-forward cross-validation protocol (typically 252-day train / 126-day test, rolled forward). In-sample Sharpe is treated as a lower bound on over-fitting risk, not as evidence.
+1. **Walk-forward first.** Out-of-sample validation under a walk-forward cross-validation protocol (typically 252-day train / 126-day test, rolled forward) is applied wherever the sample length supports it; studies 08 and 09 are explicitly structured around it. Where a study reports full-sample statistics — 01, 03, 04, 06 and 07 — it is labelled as such in its own README, and the figure is treated as a lower bound on over-fitting risk, not as evidence.
 2. **Costs are a first-class citizen.** A strategy that is not robust to 2–5bps per-day transaction costs is not a strategy. Cost sensitivity is a pre-deployment gate, not an afterthought.
 3. **Drawdown budget over headline Sharpe.** Allocation decisions are anchored on drawdown budget consumption, inter-strategy correlation, and realized-vol scaling — not on picking the highest-Sharpe sleeve.
 4. **Failures are findings.** Negative results (e.g. crypto temporal edges failing OOS) are reported alongside positive ones. The value of the research framework is its rejection rate, not its acceptance rate.
