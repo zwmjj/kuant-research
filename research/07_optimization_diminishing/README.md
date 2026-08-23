@@ -77,7 +77,7 @@ On the three metrics that actually matter to a PM — risk-adjusted
 return (Sharpe), geometric return (CAGR), and drawdown — the humble
 `equal_weight` book is:
 
-- Only method with both positive Sharpe AND positive CAGR
+- The only method with a positive Sharpe, and the least negative CAGR of the four — note that all four CAGRs are negative over this window
 - Tied with `inverse_vol` on drawdown
 - 1000+ basis points ahead of `max_sharpe` on CAGR
 - 70 percentage points ahead of `max_sharpe` on MDD
