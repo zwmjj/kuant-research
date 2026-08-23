@@ -25,13 +25,19 @@ XLY/XLP/XLI/XLB/XLU/XLRE) instead of the full CRSP universe. Two reasons:
 1. It's fully reproducible without WRDS. Anyone with `yfinance` can
    rerun it.
 2. The *shape* of the cost/Sharpe trade-off is a property of the
-   **signal**, not the universe. A 10-ETF version gives the same
-   qualitative finding as a 3,000-stock CRSP run — the slope is what
-   matters, not the absolute Sharpe level.
+   **signal**, not the universe — so the *slope* of Sharpe against cost
+   is the object of interest here, not the absolute level, and a 10-ETF
+   panel is enough to see a slope. Whether the same slope appears on a
+   single-stock CRSP universe is a claim this study does not test.
 
-A WRDS CRSP hook is included in `data.py` for anyone who wants to
-reproduce the full-universe version. It reads `WRDS_USERNAME` /
-`WRDS_PASSWORD` from the environment.
+A CRSP hook is included in `data.py` for anyone who wants to run the
+single-stock version: point-in-time S&P 500 membership, the standard common-
+stock screen, and Shumway (1997) delisting adjustment, reading
+`WRDS_USERNAME` / `WRDS_PASSWORD` from the environment. **No result in this
+repository comes from it** — a CRSP-backed figure is not checkable by a
+reader without a subscription, so everything published here is the public
+path. The delisting arithmetic is split out so it can be checked without a
+WRDS session; the query itself ships unexercised. See `data_contract.md`.
 
 ### Signals (all price-based, no fundamentals needed)
 
@@ -69,7 +75,7 @@ For each signal:
 cd research/01_signal_decay_vs_cost
 pip install -r requirements.txt
 python run.py                 # yfinance fallback (default)
-python run.py --source wrds   # full CRSP universe, needs WRDS creds
+python run.py --source wrds   # point-in-time S&P 500, needs WRDS creds
 ```
 
 Cache lives in `research/data_cache/` and is reused after first download.
@@ -144,8 +150,9 @@ Some of the numbers above will look different on CRSP. In particular:
   beyond 10 sector ETFs — XLP and XLU aren't enough variation to see
   it on a 10-name book.
 
-Run `python run.py --source wrds` if you have WRDS credentials and want
-to verify both points on the full monthly CRSP universe.
+If you have WRDS credentials, `python run.py --source wrds` is where to
+test both points on a single-stock universe. Expect to adapt the query —
+it is a starting point, not a path this repository has exercised.
 
 ## Files
 
