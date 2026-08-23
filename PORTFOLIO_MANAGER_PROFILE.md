@@ -4,7 +4,7 @@
 **Location.** Cambridge, United Kingdom.
 **Tenure.** September 2025 – Present.
 
-> This document is the public summary of a privately operated systematic portfolio. It deliberately omits live P&L, account identifiers, broker configuration, specific signal parameters, execution plumbing, and any information that could be reverse-engineered into a tradable signal. For the underlying research methodology, see [`research/`](research/) and [`methodology/`](methodology/).
+**Scope.** Public summary of a **personal, self-funded** systematic book — no external or client capital is managed. Paper trading from August 2025; live since September 2025. This document deliberately omits live P&L, account identifiers, broker configuration, specific signal parameters, execution plumbing, and any information that could be reverse-engineered into a tradable signal. Performance figures published in this repository describe the **paper-traded** configuration; the live book runs a modified version that is not published, and the two are expected to differ. For the underlying research methodology see [`research/`](research/), and for full reporting conventions see the Scope & Disclosure note in the [README](README.md).
 
 ---
 
@@ -27,7 +27,7 @@ Individual strategy specifications, lookbacks, and parameter grids are not publi
 
 ## Portfolio Construction
 
-Allocation is driven by a **cost-adjusted EWMA Sharpe** criterion — individual-sleeve weights are optimized under a realistic 2bps/day execution-cost assumption, not on raw backtest Sharpe. See [`research/01_cost_robust_portfolio.md`](research/01_cost_robust_portfolio.md) for why this matters; the short version is that the "best" weighting scheme under zero cost (risk parity) inverts to losing under 2bps, while Sharpe-weighted allocation remains profitable through 5bps.
+Allocation is driven by a **cost-adjusted EWMA Sharpe** criterion — individual-sleeve weights are optimized under a realistic 2bps/day execution-cost assumption, not on raw backtest Sharpe. The reason is that the "best" weighting scheme under zero cost inverts to losing under 2bps, while Sharpe-weighted allocation remains profitable through 5bps; see [`research/07_optimization_diminishing/`](research/07_optimization_diminishing/) for the analogous result on public data, where mean-variance optimization posts the highest Sharpe while producing a −94% drawdown.
 
 Positions are re-sized using:
 
@@ -56,11 +56,12 @@ Positions are re-sized using:
 
 The research process that feeds this book is documented in this repository:
 
-- [`research/01_cost_robust_portfolio.md`](research/01_cost_robust_portfolio.md) — Why the selection criterion is cost-adjusted EWMA Sharpe, not raw Sharpe.
-- [`research/02_cross_asset_alpha.md`](research/02_cross_asset_alpha.md) — Which signal families survived walk-forward validation across asset classes, and why crypto temporal edges failed.
-- [`methodology/STRATEGY_WHITEPAPER.md`](methodology/STRATEGY_WHITEPAPER.md) — Full strategy framework.
-- [`methodology/STRATEGY_CHECKLIST.md`](methodology/STRATEGY_CHECKLIST.md) — Pre-deployment gates.
-- [`methodology/STAT_AUDIT_RESULT.md`](methodology/STAT_AUDIT_RESULT.md) — Statistical audit results.
+- [`research/README.md`](research/README.md) — Full catalogue of the fourteen reproducible studies, with the reproducibility protocol and shared cost model.
+- [`research/01_signal_decay_vs_cost/`](research/01_signal_decay_vs_cost/) — How far transaction cost erodes each signal, and which remain deployable.
+- [`research/06_execution_model/`](research/06_execution_model/) — Sensitivity of reported Sharpe to the execution-cost assumption, across seven scenarios.
+- [`research/07_optimization_diminishing/`](research/07_optimization_diminishing/) — Why allocation optimization is negative value-add at small signal counts.
+- [`research/11_cross_market_robustness/`](research/11_cross_market_robustness/) — Which signal families hold across U.S. and China A-share markets.
+- [`methodology/STRATEGY_WHITEPAPER.md`](methodology/STRATEGY_WHITEPAPER.md) — Reference framework for a separate single-strategy equity study.
 
 ## What Is Not In This Repository
 
