@@ -31,21 +31,34 @@ Requires:
 - `wrds` Python package installed
 - `WRDS_USERNAME` / `WRDS_PASSWORD` exported in the environment
 
-Query: `SELECT date, permno, ret FROM crsp.msf WHERE ...` — pulls the
-full monthly return series, pivots to wide, drops permno with <24
-observations to stabilize quintile ranks.
+Query: `crsp.msf` joined to `crsp.msp500list` for **point-in-time** index
+membership, to `crsp.msenames` for the standard US common-stock screen
+(`shrcd` 10/11, `exchcd` 1/2/3), and left-joined to `crsp.msedelist` for the
+delisting return. Returns are delisting-adjusted on the Shumway (1997)
+convention — `(1 + ret) * (1 + dlret) - 1`, with a missing `dlret` filled at
+-30% for performance-related codes (500-599) and 0% otherwise. The result is
+pivoted wide and permno with fewer than 24 observations are dropped to
+stabilise quintile ranks.
 
-This backend is included as a reference implementation; the Kuant main
-platform uses a richer pipeline with delisting adjustments (Shumway 1997),
-which this simplified version intentionally does not replicate. The
-shape of the cost/Sharpe trade-off is the same either way; the absolute
-Sharpe levels will differ.
+Membership is point-in-time deliberately: taking today's S&P 500 list and
+running it backwards is the survivorship bias study 02 measures, and it is
+worth several tenths of a Sharpe.
+
+**Status: interface, not a published result.** No figure in this repository
+is computed from this backend — every headline number comes from the public
+yfinance path, because a CRSP-backed number cannot be checked by a reader
+without a subscription. The query is written to standard CRSP schema, and the
+delisting arithmetic is separated into `apply_delisting_adjustment()` so it can
+be checked without a WRDS session, but the repository ships no evidence that the
+query itself has been executed. Treat it
+as a starting point to adapt rather than a tested path.
 
 ## Why both?
 
 The study's core finding — that signal persistence determines a
 strategy's cost budget — is a property of the *signal*, not the
-universe. You can see the shape on 10 ETFs just as clearly as on
-3,000 CRSP stocks. The yfinance backend makes the study fully
-reproducible for anyone without WRDS access; the WRDS backend is there
-if you want to verify on institutional-grade data.
+universe, so a 10-ETF panel is enough to trace the shape. The yfinance
+backend makes the study reproducible by anyone, which is why it is the
+published one. The CRSP backend exists so that someone with a
+subscription can check whether the same shape holds on a single-stock
+universe; this repository does not claim to know that it does.
