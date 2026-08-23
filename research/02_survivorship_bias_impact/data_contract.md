@@ -12,16 +12,15 @@ akshare, Ken French) filters them out at the source. You cannot
 reproduce this study on public data; the real CRSP-with-delisting
 panel requires WRDS access and a Shumway 1997 adjustment pass.
 
-Rather than ship a Tier C study with a "WRDS required" wall, we ship
-a synthetic demonstration: generate a 50-asset × 240-month universe
-with a ~5%-per-year delisting rate and a −30% terminal shock (matching
-the Shumway empirical average), then run the same backtest on (a) the
+Rather than ship a study behind a "WRDS required" wall, this one is a
+synthetic demonstration: generate a 50-asset × 240-month universe at a
+0.2%-per-month hazard (≈2.4% per year) with a terminal shock drawn from
+N(−30%, 10%) — the Shumway (1997) convention for a missing
+performance-delisting return — then run the same backtest on (a) the
 survivors-only subset and (b) the full delisting-adjusted panel. The
 Sharpe gap between the two is the bias.
 
-The **methodology** is identical to the WRDS version in
-`quant/qf/data.py` in the main Kuant platform. Only the data is
-synthetic.
+Only the data is synthetic; the adjustment logic is the standard one.
 
 ## What the synthetic run demonstrates
 
@@ -32,5 +31,6 @@ synthetic.
 - The direction is always positive (you can never be negatively biased
   by dropping the worst performers).
 
-Anyone running the real WRDS version will see the same signs, slightly
-different magnitudes depending on the sample.
+A run on CRSP with the real delisting file would be expected to show the
+same sign, at a magnitude that depends on the sample period and the
+delisting-return convention chosen.
