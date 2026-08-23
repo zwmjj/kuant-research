@@ -11,6 +11,8 @@ from typing import Dict, Optional
 
 import pandas as pd
 
+from research._core import frozen as _frozen
+
 CACHE_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data_cache"
 )
@@ -51,6 +53,13 @@ def fetch_cn_indices(
     """
     idx_map = indices or DEFAULT_INDICES
     cache_key = f"cn_{'_'.join(sorted(idx_map.keys()))}_{start}"
+
+    # Frozen copy first: akshare scrapes an unofficial endpoint, so a
+    # published result must not depend on it still answering the same way.
+    frozen_panel = _frozen.load(cache_key)
+    if frozen_panel is not None:
+        return frozen_panel
+
     os.makedirs(CACHE_DIR, exist_ok=True)
     path = os.path.join(CACHE_DIR, f"{cache_key}.pkl")
 

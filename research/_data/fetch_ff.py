@@ -16,13 +16,22 @@ from typing import Optional
 
 import pandas as pd
 
+from research._core import frozen as _frozen
+
 CACHE_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data_cache"
 )
 
 
 def _cached(name: str, builder):
-    """Memoize a DataFrame to data_cache/<name>.pkl."""
+    """Return the frozen panel if there is one; otherwise fetch and memoize.
+
+    The frozen copy is checked first so a clone reproduces offline and is
+    pinned against the upstream series being restated. See _core/frozen.py.
+    """
+    df = _frozen.load(name)
+    if df is not None:
+        return df
     os.makedirs(CACHE_DIR, exist_ok=True)
     path = os.path.join(CACHE_DIR, f"{name}.pkl")
     if os.path.exists(path):
