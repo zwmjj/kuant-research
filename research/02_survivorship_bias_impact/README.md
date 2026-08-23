@@ -9,10 +9,11 @@
 ## Research question
 
 **How much does dropping delisted stocks inflate backtest Sharpe?**
-This is the most widely-discussed data bias in quant equity research
-— Shumway 1997 showed that CRSP's delisting returns average −55% for
-performance-delistings and that naïve backtests that filter them out
-systematically overstate alpha.
+This is the most widely-discussed data bias in quant equity research.
+Shumway (1997) sets the convention of assigning −30% where a
+performance-related delisting return is missing from CRSP; Shumway &
+Warther (1999) report roughly −55% on Nasdaq. Either way, a backtest
+that filters delisted names out systematically overstates alpha.
 
 ## Why this study is synthetic
 
@@ -21,8 +22,8 @@ assets. Every free data source (yfinance, akshare, Ken French)
 filters them out. You cannot reproduce it without paid data (WRDS
 CRSP with Shumway adjustment).
 
-Rather than make this a locked-out Tier C study, we demonstrate the
-**methodology** on a synthetic universe:
+Rather than ship a study nobody without a WRDS subscription can run,
+this one demonstrates the **methodology** on a synthetic universe:
 
 1. Generate 50 assets × 240 months with a seeded RNG.
 2. Each asset has a latent "quality" score that shifts its mean
@@ -34,9 +35,13 @@ Rather than make this a locked-out Tier C study, we demonstrate the
    - `full_delist_adjusted` — every terminal shock is kept in the panel
 5. Measure the Sharpe gap.
 
-The gap is an **honest lower bound** on the real CRSP version's bias
-(synthetic delistings are less extreme than real ones — Shumway's
-average for performance-delistings is −55%, we use −30%).
+The gap measures the bias under a known data-generating process. It is
+not an estimate of the historical U.S. bias, and it is likely to be a
+lower bound on one: the −30% terminal shock used here is the Shumway
+(1997) convention for performance-related delistings with a missing
+delisting return, whereas Shumway & Warther (1999) find roughly −55% on
+Nasdaq specifically. The two figures are often quoted interchangeably;
+they are not the same estimate.
 
 ## Reproduce
 
@@ -65,33 +70,21 @@ Without the delisting adjustment, you would have concluded the
 strategy earns alpha (albeit modest, Sharpe 0.12). With the
 adjustment, you correctly conclude there is nothing there.
 
-### Comparing to the main platform's WRDS CRSP result
+### Why this is likely to understate the real bias
 
-The Kuant main platform (`quant/qf/data.py`) runs the same
-methodology on the real CRSP panel with 8,446 historical delisting
-returns applied. Headline numbers from the main platform:
-
-- CRSP (no delisting adjustment): Sharpe ~0.60
-- CRSP with Shumway 1997 adjustment: Sharpe ~0.45
-- **Bias: +0.15 Sharpe units**
-
-Our synthetic run produces **+0.135 Sharpe units** of bias — same
-sign, same order of magnitude. The methodology is correct; you can
-read the code in `signals.generate_universe_with_delisting` to verify.
-
-### Why the synthetic numbers are a lower bound
-
-1. **We delisted at −30%.** Shumway's performance-delisting average
-   is −55%. Real delistings hit harder than ours.
+1. **We delisted at −30%.** That is the Shumway (1997) convention for a
+   missing delisting return. Shumway & Warther (1999) put the Nasdaq
+   figure nearer −55%, so real delistings plausibly hit harder than the
+   ones simulated here.
 2. **We used 50 names.** CRSP has thousands; the tail of extreme
    delisting events is correspondingly longer.
 3. **We delisted uniformly.** Real delistings cluster in crisis
    windows (2008, 2020), which amplifies the bias during those
    periods.
 
-A well-calibrated real-world adjustment typically produces +0.10 to
-+0.20 Sharpe of bias on a 2000–2025 momentum book. Our synthetic run
-sits in that range.
+The published literature on delisting adjustments reports biases of
+comparable magnitude on U.S. momentum books; this run should be read as
+a demonstration of mechanism and direction, not as a competing estimate.
 
 ### Takeaway
 
@@ -101,26 +94,16 @@ sits in that range.
 > zero.** The direction is always positive, so the bias is always in
 > the favor-the-researcher direction.
 
-The main Kuant platform's production backtest engine applies the
-Shumway 1997 delisting adjustment by default. This study exists to
-document *why* — and to let external contributors reproduce the
-methodology without needing a WRDS subscription.
+## Running this on real data
 
-## The real version
-
-The Kuant main platform (`quant/qf/data.py`) ships a full WRDS CRSP
-pipeline with 8,446 delisting returns applied from the Shumway 1997
-methodology. On the CRSP panel, the survivorship bias on a 12-month
-momentum factor is roughly:
-
-- Raw CRSP (no adjustment): Sharpe ~0.60
-- Delisting-adjusted:       Sharpe ~0.45
-- Bias:                     +0.15 Sharpe units
-
-These are reference numbers from the main platform, not reproducible
-here. The synthetic run in this folder should produce a **smaller
-but same-sign** bias, proving the methodology is correct even if the
-data isn't institutional-grade.
+Reproducing the same measurement on CRSP requires the delisting file and
+a Shumway-convention adjustment pass over it, which is outside what this
+repository can ship. The procedure is: apply the delisting return where
+present; where it is missing, assign −30% to performance-related
+delisting codes (500–599) and 0% to M&A and exchange-move codes; then
+run the identical backtest on the survivors-only and adjusted panels and
+take the difference. Any figure produced that way belongs in whatever
+repository holds the licensed data, not here.
 
 ## Files
 
