@@ -34,6 +34,12 @@ echo " 3. re-run every study and diff every number"
 echo "=============================================="
 $PY tools/rerun_and_diff.py
 
+echo
+echo "=============================================="
+echo " 4. optional: is there a fix for study 10's hole?"
+echo "=============================================="
+$PY tools/probe_cn_alternatives.py || true
+
 cat <<'NOTE'
 
 ==============================================

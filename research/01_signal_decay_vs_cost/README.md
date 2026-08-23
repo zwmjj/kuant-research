@@ -36,8 +36,8 @@ stock screen, and Shumway (1997) delisting adjustment, reading
 `WRDS_USERNAME` / `WRDS_PASSWORD` from the environment. **No result in this
 repository comes from it** — a CRSP-backed figure is not checkable by a
 reader without a subscription, so everything published here is the public
-path. The delisting arithmetic is split out so it can be checked without a
-WRDS session; the query itself ships unexercised. See `data_contract.md`.
+path. The delisting arithmetic is unit-tested; the query itself ships
+unexercised. See `data_contract.md`.
 
 ### Signals (all price-based, no fundamentals needed)
 

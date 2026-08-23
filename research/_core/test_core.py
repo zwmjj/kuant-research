@@ -153,6 +153,41 @@ def test_regression_refuses_short_overlap():
     assert "error" in out
 
 
+# --------------------------------------------------------------------------
+# study 01's CRSP delisting adjustment — the query needs a WRDS session, the
+# arithmetic does not, so the arithmetic is tested here
+# --------------------------------------------------------------------------
+def _delist_module():
+    import importlib.util
+    path = Path(__file__).resolve().parents[1] / "01_signal_decay_vs_cost" / "data.py"
+    spec = importlib.util.spec_from_file_location("study01_data", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_delisting_adjustment_follows_shumway():
+    m = _delist_module()
+    df = pd.DataFrame({
+        "ret":    [0.02, -0.05, 0.01, 0.03, np.nan],
+        "dlret":  [np.nan, np.nan, -0.60, np.nan, np.nan],
+        "dlstcd": [np.nan, np.nan, 574.0, 231.0, 580.0],
+    })
+    out = m.apply_delisting_adjustment(df)
+
+    assert out["ret_adj"].iloc[0] == 0.02                      # no delisting: untouched
+    assert abs(out["ret_adj"].iloc[2] - ((1.01 * 0.40) - 1)) < 1e-12   # explicit dlret compounds
+    assert abs(out["ret_adj"].iloc[3] - 0.03) < 1e-12          # M&A (231), missing dlret -> 0%
+    assert abs(out["ret_adj"].iloc[4] + 0.30) < 1e-12          # performance (580) -> -30%
+
+
+def test_delisting_month_is_never_silently_dropped():
+    m = _delist_module()
+    df = pd.DataFrame({"ret": [np.nan], "dlret": [np.nan], "dlstcd": [500.0]})
+    out = m.apply_delisting_adjustment(df)
+    assert out["ret_adj"].notna().all()   # the whole point: the loss is recorded, not lost
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):
