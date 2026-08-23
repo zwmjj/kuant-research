@@ -83,10 +83,11 @@ Sharpe across every factor formulation.
 ### What this study is *not* saying
 
 It is **not** saying the low-vol premium is dead at the single-stock
-level. Within an equity-only universe (e.g. S&P 500 constituents
-from the WRDS backend in study 01), low-vol Sharpe is positive and
-modest over the same period. The finding here is specific to the
-cross-asset ETF universe: **in a universe where systematic
+level. This study cannot speak to that at all: it never tested an
+equity-only cross-section. Testing one would need a single-stock universe
+— study 01 ships a CRSP hook for exactly that, though no result from it is
+published here. The finding below is specific to the cross-asset ETF
+universe: **in a universe where systematic
 equity-vs-debt risk dominates, idiosyncratic vol factors all pick
 up the wrong cross-section.**
 
