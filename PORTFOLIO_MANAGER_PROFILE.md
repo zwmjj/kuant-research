@@ -4,13 +4,13 @@
 **Location.** Cambridge, United Kingdom.
 **Tenure.** September 2025 – Present.
 
-**Scope.** Public summary of a **personal, self-funded** systematic book — no external or client capital is managed. Paper trading from August 2025; live since September 2025. This document deliberately omits live P&L, account identifiers, broker configuration, specific signal parameters, execution plumbing, and any information that could be reverse-engineered into a tradable signal. Performance figures published in this repository describe the **paper-traded** configuration; the live book runs a modified version that is not published, and the two are expected to differ. For the underlying research methodology see [`research/`](research/), and for full reporting conventions see the Scope & Disclosure note in the [README](README.md).
+**Scope.** Public summary of a **personal, self-funded** systematic book — no external or client capital is managed. Paper trading from August 2025; live since September 2025. This document deliberately omits live P&L, account identifiers, broker configuration, specific signal parameters, execution plumbing, and any information that could be reverse-engineered into a tradable signal. Performance figures published in this repository describe the **paper-traded** configuration; the live book runs a modified version that is not published, and the two are expected to differ. For the underlying research methodology see [`research/`](research/), and for full reporting conventions — cost treatment, risk-free convention, and the paper-versus-live distinction — see the scope and reporting notes at the top of the [README](README.md).
 
 ---
 
 ## Mandate
 
-Sole portfolio manager of a live multi-asset systematic book combining 14 strategies across U.S./HK equities, U.S. Treasuries, commodities (precious metals, industrial metals, energy, agri), G10 FX, and liquid crypto majors. Full ownership of the research pipeline, allocation framework, risk budget, and execution.
+Sole portfolio manager of a live multi-asset systematic book combining 14 strategies across U.S., U.K., Hong Kong and Korean equity indices, U.S. Treasuries, commodities (precious metals, industrial metals, energy, agri), G10 FX, and liquid crypto majors. Full ownership of the research pipeline, allocation framework, risk budget, and execution.
 
 The book is deliberately multi-strategy and multi-asset rather than concentrated: the design premise is that a book of moderately-correlated, cost-robust sleeves outperforms a single high-Sharpe sleeve on a drawdown-adjusted basis over a full cycle.
 
@@ -43,14 +43,14 @@ Positions are re-sized using:
 - **Drawdown budget** consumed linearly; breaches of sleeve-level budgets trigger automatic re-weighting rather than discretionary override.
 - **Cost-robustness gate** applied pre-deployment: any candidate configuration whose Sharpe at 5bps is negative is rejected, regardless of gross metrics.
 - **Walk-forward validation** on every signal: 252/126 train/test rolled forward, all-folds-positive rule.
-- **Correlation stress**: the observed correlation drag (~30%) relative to the theoretical uncorrelated upper bound is tracked as a diagnostic for diversification decay.
+- **Correlation stress**: the observed correlation drag — a realised portfolio Sharpe of 2.26 against a 3.51 theoretical uncorrelated upper bound, i.e. roughly 36% of the diversification benefit lost to inter-sleeve correlation — is tracked as a diagnostic for diversification decay.
 
 ## Execution & Operations
 
 - Cloud-native execution stack against a broker REST API; scheduled rebalancing and hourly portfolio/risk monitoring.
 - Pre-trade risk checks, post-trade reconciliation, and alerting are automated.
 - All signals use `shift(1)` to eliminate look-ahead bias from research to production.
-- Operational runbook, audit protocol, and strategy pre-deployment checklist are documented under [`methodology/`](methodology/).
+- The execution architecture is described at framework level in [`methodology/STRATEGY_WHITEPAPER.md`](methodology/STRATEGY_WHITEPAPER.md) §10–11. The orders actually placed, their timing and sizing, and the account they are placed in are not published.
 
 ## Research Pipeline
 
@@ -61,13 +61,14 @@ The research process that feeds this book is documented in this repository:
 - [`research/06_execution_model/`](research/06_execution_model/) — Sensitivity of reported Sharpe to the execution-cost assumption, across seven scenarios.
 - [`research/07_optimization_diminishing/`](research/07_optimization_diminishing/) — Why allocation optimization is negative value-add at small signal counts.
 - [`research/11_cross_market_robustness/`](research/11_cross_market_robustness/) — Which signal families hold across U.S. and China A-share markets.
-- [`methodology/STRATEGY_WHITEPAPER.md`](methodology/STRATEGY_WHITEPAPER.md) — Reference framework for a separate single-strategy equity study.
+- [`methodology/STRATEGY_WHITEPAPER.md`](methodology/STRATEGY_WHITEPAPER.md) — Reference framework for a separate single-strategy equity study: risk gates, cost assumptions, and the statistical protocol.
+- [`methodology/DATA_SOURCES.md`](methodology/DATA_SOURCES.md) — Catalogue of the public data sources used across the studies, with coverage and access notes.
 
 ## What Is Not In This Repository
 
-- Live P&L series, account balances, position sizes, or broker identifiers
+- Live P&L series, account balances, position sizes, or account identifiers
 - Specific signal parameters, lookbacks, or thresholds
-- Execution code, order-routing logic, credentials, or environment configuration
+- Executable trading code, credentials, environment configuration, or any record of the orders actually placed — the execution *framework* is described in the whitepaper; the operations performed under it are not
 - Any data that could be reverse-engineered into a tradable signal
 
 These are maintained separately and are not publishable.
@@ -76,4 +77,4 @@ These are maintained separately and are not publishable.
 
 ## Disclaimer
 
-This document describes the scope and methodology of a privately operated portfolio for research and professional-profile purposes only. Nothing here constitutes investment advice, a solicitation, or a representation of future performance. Walk-forward backtest figures cited in linked research documents are out-of-sample under the stated protocol but are not guarantees.
+This document describes the scope and methodology of a privately operated portfolio for research and professional-profile purposes only. Nothing here constitutes investment advice, a solicitation, or a representation of future performance. Backtest figures cited in linked research documents are reported under the conventions stated in each study — walk-forward out-of-sample where the sample supports it, full-sample where labelled as such — and are not guarantees.
