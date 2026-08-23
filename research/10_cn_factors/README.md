@@ -81,9 +81,12 @@ First run pulls ~8 index histories from akshare and caches them to
 | Div_CN*    |109  | +0.408      | +0.408| (n/a) | +2.3%  | −10.9%  |
 | Growth_CN  | 186 | +0.288      | +0.266| +0.374| +4.1%  | −48.8%  |
 
-&nbsp;&nbsp;&nbsp;&nbsp;\* LowVol and Dividend indices begin partway through
-the sample (LowVol ≈ 2019, Div ≈ 2016), so the 2020-12-31 OOS split
-leaves too few observations to compute OOS Sharpe.
+&nbsp;&nbsp;&nbsp;&nbsp;\* The LowVol and Dividend series **end early**, not
+late: LowVol covers 2012-02 → 2016-06 (53 months) and Dividend covers
+2010-01 → 2019-01 (109 months), while every other series in the panel runs
+to 2025-12. Both therefore terminate before the 2020-12-31 IS/OOS split, so
+no OOS Sharpe exists for either and their full-sample figures are not
+comparable with the rest of the table.
 
 ### Value/Growth cycle — very long cycles, very clear
 
@@ -116,10 +119,13 @@ leaves too few observations to compute OOS Sharpe.
    opposite of the U.S. SMB story and is the single most interesting
    finding in this study.
 
-4. **LowVol_CN has a 0.93 Sharpe over 53 months** — strong, but on a
-   sample too short to claim a premium. The index started in mid-2019
-   and captured the defensive-rotation regime. Rerun in 2028 and see
-   whether it survives.
+4. **LowVol_CN's 0.93 Sharpe is a 2012–2016 artefact, not a live result.**
+   The series covers 53 months ending June 2016 — it never saw 2018, the
+   2020 crash, or the post-2022 regime. It is reported for completeness and
+   should not be read as evidence of a low-volatility premium in A-shares;
+   the same is true, less severely, of Div_CN, which stops in January 2019.
+   Restoring these two to the panel needs a replacement data source with
+   continuous coverage, not a re-run of this study.
 
 5. **Growth_CN (GEM − CSI300) improved OOS** (0.37 vs 0.27 IS) —
    ChiNext didn't collapse post-2022 the way U.S. small-cap growth did.
