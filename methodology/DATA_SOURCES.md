@@ -1,147 +1,89 @@
-# Kuant 数据源指南
+# Data Sources
 
-## 当前已接入
-
-| 数据源 | 市场 | 内容 | 费用 | 状态 |
-|--------|------|------|------|------|
-| **WRDS/CRSP** | 美股 | 月频价格/收益/退市/成交量 | 学校账号免费 | ✅ 运行中 |
-| **WRDS/Compustat** | 美股 | 年报基本面(ROE/BM/GP等) | 同上 | ✅ 运行中 |
-| **WRDS/FF** | 美股 | Fama-French因子 | 同上 | ✅ 运行中 |
-| **baostock** | A股 | 月频后复权/成交量/换手率 | **免费** | ✅ 运行中 |
-| **akshare** | A股 | 指数日线(CSI300等) | **免费** | ⚠ 个股限流 |
-| **yfinance** | 美股 | SPY基准补充 | **免费** | ✅ 补充用 |
+Catalogue of the data used across this repository: what each source provides,
+what period it covers, how it is obtained, and where its limitations bite the
+research. Sources are labelled by *tier*: A is fully public and reproducible
+from a fresh clone, B is public but rate-limited or served by an unofficial
+endpoint, and C requires a licensed subscription. No study in this repository
+publishes a tier-C result — the C row is listed because studies expose an
+opt-in hook for readers who do hold a subscription.
 
 ---
 
-## 免费数据源
+## 1. Sources used in this repository
 
-### 美股
+| Source | Market | Content | Frequency | Access | Tier |
+|---|---|---|---|---|---|
+| **Kenneth French Data Library** | U.S. | FF3/FF5 factors, industry portfolios, momentum deciles | Monthly | Public, no credentials (`pandas_datareader.famafrench`, Dartmouth archives) | A |
+| **yfinance** | U.S., global ETFs | Adjusted close, volume | Daily | Public, no credentials; unofficial endpoint | B |
+| **akshare** | China A-share | CSI/SSE index levels | Daily | Public, no credentials; per-IP rate limits | B |
+| **FRED (St. Louis Fed)** | U.S. macro | Yield-curve, volatility and credit-spread series | Daily | Public, no credentials (`pandas_datareader`) | A |
+| **Synthetic panels** | — | Delisting-bias and crowding simulations | Monthly | Generated in-repo from a pinned seed | A |
+| **WRDS CRSP / Compustat** | U.S. | Monthly stock file, delisting file, fundamentals | Monthly / annual | Institutional subscription; credentials read from the environment | C |
 
-| 数据源 | 内容 | 频率 | 质量 | 接入难度 | 备注 |
-|--------|------|------|------|----------|------|
-| **Kenneth French Library** | FF3/5因子、行业分组 | 月 | ★★★★★ | 低 | pandas_datareader直接拉 |
-| **FRED (St. Louis Fed)** | 宏观指标(利率/GDP/CPI/VIX) | 日/月 | ★★★★★ | 低 | `fredapi`包, 免费API key |
-| **SEC EDGAR** | 10-K/10-Q全文, 内部交易 | 事件 | ★★★★ | 中 | XML解析, 免费API |
-| **Yahoo Finance** | 价格/成交量/基本面 | 日 | ★★★ | 低 | `yfinance`, 不稳定 |
-| **Alpha Vantage** | 价格/基本面/经济指标 | 日 | ★★★ | 低 | 免费500次/天 |
-| **Tiingo** | EOD价格、新闻 | 日 | ★★★★ | 低 | 免费500次/小时 |
-| **Polygon.io** | 价格/期权/新闻 | 分钟 | ★★★★ | 低 | 免费tier 5次/分钟 |
-| **OpenBB** | 聚合多源(整合了上面很多) | 混合 | ★★★★ | 中 | Python SDK, 免费 |
+Fetchers live in [`research/_data/`](../research/_data/). Every fetcher caches
+its output to `research/data_cache/` as a pickle, so a second run of any study
+is offline and deterministic. No fetcher in this repository touches a licensed
+vendor: where a study offers a CRSP backend it is an opt-in hook inside that
+study's own `data.py`, guarded on `WRDS_USERNAME` / `WRDS_PASSWORD` being
+present, and the study's headline result is always the public-data version.
 
-### A股
+### Why the public backend is the published one
 
-| 数据源 | 内容 | 频率 | 质量 | 接入难度 | 备注 |
-|--------|------|------|------|----------|------|
-| **baostock** | 价格/财务/成分股 | 日/月 | ★★★★ | **低** | 完全免费无限量 |
-| **akshare** | 几乎所有A股数据 | 日 | ★★★★ | 低 | 免费但有限流 |
-| **Tushare** | 价格/财务/分析师/龙虎榜 | 日 | ★★★★★ | 低 | 免费200积分/天, 高级要付费 |
-| **efinance** | 实时行情/历史数据 | 分钟 | ★★★ | 低 | 完全免费 |
-| **CSMAR (国泰安)** | 学术级A股全量 | 日/月 | ★★★★★ | 高 | 学校账号免费 |
-| **Wind万得** | 最全A股数据 | tick | ★★★★★ | 中 | 个人¥0(学校), 机构很贵 |
-
-### 另类数据 (免费)
-
-| 数据源 | 内容 | 用途 | 接入 |
-|--------|------|------|------|
-| **GDELT** | 全球新闻事件 | 情绪因子 | BigQuery免费 |
-| **Reddit/Twitter API** | 社交媒体情绪 | 散户情绪 | 免费tier |
-| **Google Trends** | 搜索热度 | 注意力因子 | `pytrends` |
-| **NOAA** | 天气数据 | 农业/能源 | 免费API |
+A CRSP-backed result is not reproducible by a reader without a subscription,
+which makes it unfalsifiable in practice. Every headline figure in
+`research/` is therefore computed on tier A or tier B data, and where a
+licensed backend would materially change the answer, the study says so in its
+own `data_contract.md` rather than quietly reporting the licensed number.
 
 ---
 
-## 低成本数据源 ($10-100/月)
+## 2. Coverage and known gaps
 
-### 美股
+| Limitation | Where it bites | Consequence |
+|---|---|---|
+| No point-in-time A-share index membership | Study 10, Study 11 | Residual survivorship bias in the CN panel, estimated at ~2% of annualised return |
+| No A-share fundamentals (ROE, book-to-market) | Study 10 | CN factor set is restricted to price-based signals; no value or quality sleeve |
+| Monthly frequency on the U.S. panel | Studies 01, 06 | Execution-cost modelling is calibrated, not measured; intraday participation effects are outside the sample |
+| No implied-volatility surface | Study 09 | Volatility factors use realised volatility only |
+| No analyst estimates | Study 13 | No SUE or post-earnings-announcement-drift signal |
+| No A-share limit-up/limit-down flags at index level | Study 10 | Tradability of extreme daily moves is not modelled |
+| yfinance and akshare are unofficial endpoints | Studies 01, 03, 09, 10, 11, 12, 14 | Schema and availability can change without notice; the pinned cache in `data_cache/` is what guarantees a reproducible re-run, not the upstream API |
 
-| 数据源 | 内容 | 费用 | 亮点 |
-|--------|------|------|------|
-| **Polygon.io Starter** | 全美股日频+延迟分钟 | $29/月 | REST+WebSocket, 好用 |
-| **Tiingo Pro** | 价格+IEX实时+基本面 | $10/月 | 最便宜的实时数据 |
-| **Alpha Vantage Premium** | 不限次调用 | $50/月 | 简单API |
-| **Quandl/Nasdaq Data Link** | 机构级因子数据 | $50/月起 | Sharadar基本面 |
-| **EOD Historical Data** | 全球70+交易所 | $20/月 | 覆盖面最广 |
-| **Alpaca Markets** | 实时美股+纸交易 | **免费** | 最佳模拟盘选择 |
-| **IEX Cloud** | 价格/基本面/另类 | $9/月起 | 质量好 |
-
-### A股
-
-| 数据源 | 内容 | 费用 | 亮点 |
-|--------|------|------|------|
-| **Tushare Pro** | 全量A股+港股 | ¥500/年(~$70) | 最佳性价比 |
-| **RiceQuant 米筐** | 全量+回测平台 | ¥2000/年 | 含回测 |
-| **JoinQuant 聚宽** | 全量+研究平台 | 免费(限制)+¥99/月 | 在线notebook |
+These are limits on what can be concluded, not defects to be worked around.
+Where a study's finding would flip under better data, that is stated in the
+study's own README under *Limitations*.
 
 ---
 
-## 专业级 ($100+/月)
+## 3. Survivorship and delisting treatment
 
-| 数据源 | 内容 | 费用 | 适合 |
-|--------|------|------|------|
-| **Bloomberg Terminal** | 万物 | $2000/月 | 机构标配 |
-| **Refinitiv Eikon** | 万物 | $300/月起 | Bloomberg替代 |
-| **FactSet** | 基本面+另类 | $1000/月 | 买方分析 |
-| **S&P Capital IQ** | 基本面深度 | $500/月 | 公司分析 |
-| **WRDS** | 学术数据库集合 | 学校免费/个人$500/年 | 你已经有 |
-| **OptionMetrics (via WRDS)** | 期权隐含波动率面 | 学校免费 | vol策略必备 |
+Study 02 is the reference implementation. Delisting returns follow the
+Shumway (1997) convention: performance-related delistings (CRSP codes
+500–599) are assigned −30% where the delisting return is missing;
+M&A and exchange-move delistings are assigned 0%. The larger −55% figure
+sometimes quoted for this adjustment comes from Shumway & Warther (1999)
+and applies to Nasdaq specifically — the two should not be used
+interchangeably.
 
----
-
-## 推荐接入优先级
-
-### Phase 1: 立即可做 (免费, 0成本)
-
-1. **FRED宏观数据** → regime因子(利率曲线/VIX/信用利差)
-   ```python
-   pip install fredapi
-   # 需要免费API key: https://fred.stlouisfed.org/docs/api/api_key.html
-   ```
-
-2. **Kenneth French Data** → 更多因子(行业动量/质量因子等)
-   ```python
-   import pandas_datareader.data as web
-   ff = web.DataReader('F-F_Research_Data_5_Factors_2x3', 'famafrench')
-   ```
-
-3. **SEC EDGAR** → 10-K文本分析, 内部交易
-   ```python
-   # 免费API: https://www.sec.gov/edgar/sec-api-documentation
-   ```
-
-4. **Tushare基础版** → A股财务数据(ROE/BM等), 补全个股基本面
-   ```python
-   pip install tushare
-   # 免费注册: https://tushare.pro/register
-   ```
-
-5. **baostock财务报表** → A股季报数据(已安装)
-   ```python
-   bs.query_profit_data()  # 盈利能力
-   bs.query_operation_data()  # 运营能力
-   bs.query_growth_data()  # 成长能力
-   ```
-
-### Phase 2: 小投入大价值 ($10-50/月)
-
-6. **Polygon.io Starter ($29/月)** → 美股日内数据, 改善执行模型
-7. **Tushare Pro (¥500/年)** → A股全量, 解锁更多A股因子
-8. **Alpaca Paper Trading (免费)** → 真实模拟盘, 验证策略
-
-### Phase 3: 深度研究
-
-9. **OptionMetrics (via WRDS)** → 隐含波动率面, vol策略升级
-10. **IBES (via WRDS)** → 分析师预期, SUE/PEAD因子
-11. **CRSP Daily (via WRDS)** → 日频数据, 精确执行模型
+Because the public backend has no delisting file, study 02 runs on a
+synthetic panel calibrated to a 2.4%/year delisting rate rather than on
+CRSP. It measures the *size and direction* of the bias under a known
+data-generating process; it does not measure the historical U.S. bias.
 
 ---
 
-## 数据质量对策略的影响
+## 4. Reproducing a study
 
-| 数据缺陷 | 当前影响 | 解决方案 |
-|----------|---------|----------|
-| A股无历史成分股调整 | 幸存者偏差~2% | Tushare Pro有历史成分股 |
-| A股无基本面(ROE/BM) | 无法做价值/质量因子 | baostock财报+Tushare |
-| 美股无日频数据 | 执行模型粗糙 | Polygon/CRSP Daily |
-| 无隐含波动率 | vol因子只用实现波动率 | OptionMetrics |
-| 无分析师预期 | 无SUE/PEAD | IBES via WRDS |
-| 无涨跌停数据 | A股执行偏差 | baostock日频有涨跌停标记 |
+```bash
+cd research/<study>
+pip install -r requirements.txt
+python run.py
+```
+
+The first run fetches and caches; subsequent runs are offline. Each run
+writes `sample_output/results.json` and diffs it against the committed
+`expected_output.json`, exiting non-zero on any metric drift beyond 1e-3.
+Source, universe, date range, and every parameter are pinned in that
+study's `config.yaml`; the contract each fetcher must satisfy is documented
+in its `data_contract.md`.
