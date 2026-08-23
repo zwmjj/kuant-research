@@ -10,10 +10,11 @@ yfinance backend:
 
 WRDS backend:
     Requires WRDS_USERNAME / WRDS_PASSWORD. Queries CRSP monthly
-    (`crsp.msf`) for the S&P 500 constituent set. This is included as a
-    reference implementation — the Kuant main repo uses a much richer
-    pipeline with delisting adjustments and a broader universe; see
-    quant/qf/data.py in the main platform repo for that.
+    (`crsp.msf`) for the S&P 500 constituent set. It is a reference
+    implementation, deliberately minimal: no delisting adjustment, no
+    point-in-time constituent handling. Results from it are not published
+    here — see the repository README on why the public backend is the
+    published one.
 """
 from __future__ import annotations
 
