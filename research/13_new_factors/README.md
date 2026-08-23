@@ -81,10 +81,9 @@ them. All subsequent runs are offline.
 > `vix_regime` pre-split) broke post-2020, with much steeper OOS
 > decay than any of the pure price-based signals in studies 01 / 08.
 
-This is consistent with the DeMiguel skeptic view of macro signals:
-they have a lot of degrees of freedom (which regime definition? which
-conditioner form? which lookback?) and each choice gives you a
-fresh opportunity to fit the sample. A clean price-based signal with
+The mechanism is degrees of freedom: a macro conditioner asks which
+regime definition, which conditioner form, and which lookback, and each
+choice is another opportunity to fit the sample. A clean price-based signal with
 no discretionary regime overlay is a harder target to overfit.
 
 ### What would make this study produce better results
@@ -96,8 +95,10 @@ no discretionary regime overlay is a harder target to overfit.
   differentiate.
 - **Smaller degrees of freedom.** One conditioner at a time, not four.
 
-The ETF-only version is here for reproducibility. The WRDS version
-is the honest one.
+The ETF-only version is the one shipped here, because it is the one a
+reader can run. The three changes above would make the test more
+informative; none of them has been run, so nothing in this study should be
+read as evidence about what a wider, longer-history version would show.
 
 ## Files
 
