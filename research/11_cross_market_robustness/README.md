@@ -79,7 +79,9 @@ cross-sectional quant book.
    - Study 03 (only signal with positive α)
    - Study 05 (member of the best 3-signal blend)
    - Study 08 (only signal with stable IS/OOS)
-   Five independent checks, same winner.
+   Four independent checks, same winner. It is not unanimous across the
+   book: study 14 finds `mr5` the *worst* of the four on HK single
+   stocks, and in the CN panel here it finishes 0.01 behind `mom1`.
 
 2. **`mom1` generalizes cross-market.** Both US and CN have negative
    IS and strongly positive OOS. The consistency of the flip across
@@ -112,9 +114,9 @@ cross-sectional quant book.
 ### Implication for portfolio construction
 
 > **Run `mr5` in both US and CN at equal weights.** The cross-
-> correlation is −0.07 so the combined book's vol is ~71% of the
-> single-market version, and the combined Sharpe is higher than
-> either leg alone.
+> correlation is −0.07, so at equal weights the combined book's vol is
+> √((1+ρ)/2) ≈ **68%** of a single-market leg, and the combined Sharpe is
+> higher than either leg alone.
 
 This is the only portfolio recommendation the entire research book
 supports on both cross-market and IS/OOS grounds.
