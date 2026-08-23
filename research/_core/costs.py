@@ -19,8 +19,13 @@ class CostConfig:
 
     commission_bps : flat per-trade fee (buy & sell), in basis points
     spread_bps     : half-spread paid on each fill, in basis points
-    impact_coeff   : coefficient on sqrt(turnover) impact term, in decimal
-                     (e.g. 0.3 means 30% of sqrt(turnover) gets charged)
+    impact_coeff   : coefficient on the sqrt(turnover) impact term, in
+                     **basis points** — the same unit as commission_bps and
+                     spread_bps. 0.3 charges 0.3bps * sqrt(turnover) on top
+                     of the flat leg. At the turnover levels these monthly
+                     studies produce the impact leg is small next to the
+                     flat leg; it is swept in study 06 to show the shape,
+                     not because it dominates the answer there.
     turnover_penalty : direct shrink applied to signal changes, unitless.
                        Higher -> lazier rebalancing -> lower realized turnover.
     """
@@ -43,7 +48,10 @@ def apply_turnover_cost(
     """Charge cost on every rebalance.
 
     turnover_t = 0.5 * sum_i |w_{i,t} - w_{i,t-1}|
-    cost_t     = turnover_t * (flat_bps + impact_coeff * sqrt(turnover_t))
+    cost_t     = turnover_t * (flat_bps + 1e-4 * impact_coeff * sqrt(turnover_t))
+
+    Both cost legs are expressed in basis points and converted to decimal
+    here; `flat_bps` does its own conversion in `CostConfig`.
 
     Returns a new Series with the same index as `raw_returns`.
     """
