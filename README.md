@@ -4,7 +4,13 @@ Independent quantitative research on systematic multi-asset portfolio constructi
 
 This repository documents the research methodology and empirical findings behind a 14-strategy multi-asset systematic book spanning U.S./HK equities, U.S. Treasuries, commodities, G10 FX, and liquid crypto majors — covering trend-following, dual/cross-asset momentum, mean reversion, and macro-regime signals.
 
-> **Scope of this repo.** Methodology, walk-forward results, and strategy-selection logic only. Live trading code, execution adapters, credentials, account data, and proprietary signal parameters are intentionally excluded.
+**Scope of this repository.** A partial, sanitized view of a larger private research and trading stack. `research/` holds fourteen reproducible offline studies on public data — methodology studies, not the traded strategies. `results/` holds sanitized selection-stage output for the 14 deployed sleeves. Live trading code, execution adapters, credentials, account data, and proprietary signal parameters are intentionally excluded.
+
+**Published figures describe the paper-traded configuration, not the live one.** The live book runs a modified version of these strategies; those modifications, and the resulting live performance, are not published. Any performance figure in this repository belongs to the paper/validation track — it is not the realised result of the live account, and the two are expected to differ.
+
+**Sharpe conventions.** Published research figures are computed net of modelled transaction costs (commission, bid-ask spread, square-root market impact) and gross of volatility targeting and drawdown control. Those overlays are used in live risk management but are excluded from reported research Sharpes, because they redistribute leverage rather than create alpha.
+
+**Capital.** A personal, self-funded account. No external or client capital is managed. Paper trading from August 2025; live since September 2025.
 
 ---
 
