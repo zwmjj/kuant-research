@@ -194,9 +194,11 @@ for any study in the catalogue, on any machine with network access.
   the 10-ETF universe in `01_signal_decay_vs_cost`) are reported
   alongside positive ones. The point isn't to sell an alpha, it's to
   produce honest public empirical work.
-- **Small universes are fine for reproducibility.** Every public-
-  fallback study carries a footnote explaining what changes on the
-  full CRSP universe, so you can trust the shape of the finding.
+- **A small universe bounds the claim, it does not excuse it.** These
+  studies run on ten-to-fourteen-name panels, which is enough to trace a
+  shape and not enough to estimate a premium. Where a wider universe would
+  plausibly change the answer, the study says so under *Limitations*
+  rather than implying the finding scales.
 
 ## License and data terms
 
