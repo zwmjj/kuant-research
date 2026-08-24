@@ -202,6 +202,9 @@ for any study in the catalogue, on any machine with network access.
 
 ## License and data terms
 
+- Code and written analysis: MIT (see [`LICENSE`](../LICENSE)). The frozen
+  panels under `research/_data_frozen/` are derived data, redistributed under
+  the terms of the sources they came from — see the table below.
 - Kenneth French data: free for academic and research use.
 - akshare: free scraper of public Sina/Tencent data.
 - yfinance: free scraper of Yahoo Finance (best-effort, terms of service
