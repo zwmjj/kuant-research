@@ -23,6 +23,21 @@ CACHE_DIR = os.path.join(
 )
 
 
+def _famafrench():
+    """Return the pandas_datareader Ken French module, forced onto HTTPS.
+
+    pandas_datareader hard-codes `http://` for the Dartmouth archive. Plain
+    HTTP fails outright in any environment that only forwards HTTPS — which is
+    most sandboxed and corporate networks — and it is unencrypted besides.
+    The host serves the identical files over TLS, so switch the scheme once,
+    here, rather than leaving every study to discover the failure separately.
+    """
+    from pandas_datareader import famafrench as ff
+    if ff._URL.startswith("http://"):
+        ff._URL = "https://" + ff._URL[len("http://"):]
+    return ff
+
+
 def _cached(name: str, builder):
     """Return the frozen panel if there is one; otherwise fetch and memoize.
 
@@ -61,7 +76,7 @@ def fetch_ff5(start: str = "2000-01-01", end: Optional[str] = None) -> pd.DataFr
     All values are decimal returns.
     """
     def _build():
-        from pandas_datareader import famafrench as ff
+        ff = _famafrench()
         r = ff.FamaFrenchReader("F-F_Research_Data_5_Factors_2x3", start=start, end=end).read()
         df = r[0] / 100.0
         return _normalize_index(df)
@@ -79,7 +94,7 @@ def fetch_ff_industries(n: int = 10, start: str = "2000-01-01", end: Optional[st
     dataset = f"{n}_Industry_Portfolios"
 
     def _build():
-        from pandas_datareader import famafrench as ff
+        ff = _famafrench()
         r = ff.FamaFrenchReader(dataset, start=start, end=end).read()
         # Key 0 = average value-weighted returns -- monthly
         df = r[0] / 100.0
@@ -95,7 +110,7 @@ def fetch_ff_momentum_deciles(start: str = "2000-01-01", end: Optional[str] = No
     without renaming.
     """
     def _build():
-        from pandas_datareader import famafrench as ff
+        ff = _famafrench()
         r = ff.FamaFrenchReader("10_Portfolios_Prior_12_2", start=start, end=end).read()
         df = r[0] / 100.0
         return _normalize_index(df)
@@ -105,7 +120,7 @@ def fetch_ff_momentum_deciles(start: str = "2000-01-01", end: Optional[str] = No
 def fetch_ff_op_portfolios(start: str = "2000-01-01", end: Optional[str] = None) -> pd.DataFrame:
     """Fetch the 5 portfolios formed on operating profitability (OP)."""
     def _build():
-        from pandas_datareader import famafrench as ff
+        ff = _famafrench()
         r = ff.FamaFrenchReader("Portfolios_Formed_on_OP", start=start, end=end).read()
         df = r[0] / 100.0
         return _normalize_index(df)
@@ -115,7 +130,7 @@ def fetch_ff_op_portfolios(start: str = "2000-01-01", end: Optional[str] = None)
 def fetch_ff_inv_portfolios(start: str = "2000-01-01", end: Optional[str] = None) -> pd.DataFrame:
     """Fetch the 5 portfolios formed on investment (INV)."""
     def _build():
-        from pandas_datareader import famafrench as ff
+        ff = _famafrench()
         r = ff.FamaFrenchReader("Portfolios_Formed_on_INV", start=start, end=end).read()
         df = r[0] / 100.0
         return _normalize_index(df)

@@ -42,6 +42,12 @@ def load(name: str) -> Optional[pd.DataFrame]:
     if not os.path.exists(path):
         return None
     df = pd.read_csv(path, index_col=0, parse_dates=True)
+    # Normalise the index resolution. A CSV carries no dtype, so the parser
+    # picks one, and different pandas versions pick differently (s vs us vs
+    # ns). The dates are identical either way, but pinning the resolution
+    # keeps a frozen panel byte-for-byte comparable to the one it was made
+    # from, and keeps two machines from disagreeing about an index dtype.
+    df.index = pd.to_datetime(df.index).as_unit("ns")
     return df.sort_index()
 
 

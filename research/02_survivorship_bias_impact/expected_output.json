@@ -125,7 +125,7 @@
     "total_return": 0.153062,
     "cagr": 0.007146,
     "sharpe": 0.1208,
-    "sortino": 0.216,
+    "sortino": 0.1799,
     "max_drawdown": -0.430762,
     "vol": 0.142443,
     "win_rate": 0.4792
@@ -135,7 +135,7 @@
     "total_return": -0.114981,
     "cagr": -0.006089,
     "sharpe": -0.0137,
-    "sortino": -0.0219,
+    "sortino": -0.0191,
     "max_drawdown": -0.330665,
     "vol": 0.097659,
     "win_rate": 0.4792

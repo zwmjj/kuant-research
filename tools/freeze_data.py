@@ -104,10 +104,16 @@ def freeze_all(refresh: bool) -> int:
         entry = frozen.save(name, df, source=source_of(name), fetched_at=today)
 
         # Round-trip: the frozen CSV must reproduce the fetched panel exactly.
+        # Index *resolution* is excluded deliberately — a CSV carries no dtype,
+        # so the reader picks one, and s/us/ns are the same instants. Every
+        # value, every column and every date is still compared exactly.
         back = frozen.load(name)
         try:
+            ref = df.sort_index().copy()
+            ref.index = pd.to_datetime(ref.index).as_unit("ns")
             pd.testing.assert_frame_equal(
-                df.sort_index(), back, check_freq=False, check_dtype=False, atol=0, rtol=1e-12
+                ref, back, check_freq=False, check_dtype=False,
+                check_index_type=False, atol=0, rtol=1e-12
             )
         except AssertionError as exc:
             problems.append(f"{name}: CSV round-trip changed the data\n    {str(exc)[:200]}")

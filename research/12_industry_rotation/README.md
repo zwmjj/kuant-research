@@ -63,7 +63,7 @@ Edit `config.yaml` to sweep:
 | Metric             | Industry momentum L/S | Decile spread (Hi − Lo) | OP premium | INV premium |
 |--------------------|-----------------------|-------------------------|------------|-------------|
 | Full-sample Sharpe | **0.236**             | 0.138                   | 0.473      | 0.233       |
-| CAGR               | 2.51%                 | −1.14%                  | —          | —           |
+| CAGR               | 2.51%                 | −1.11%                  | —          | —           |
 | Max drawdown       | −36.4%                | —                       | —          | —           |
 | IS Sharpe (≤2020)  | 0.237                 | —                       | —          | —           |
 | OOS Sharpe (>2020) | 0.236                 | —                       | —          | —           |

@@ -34,7 +34,7 @@ Legend:
 |---|-------|----------|------|--------|-------------------|
 | 01 | [Signal Decay vs Transaction Cost](01_signal_decay_vs_cost/) | Execution | 🟡 | ✅ | `mr5` most cost-robust; `mom12` best frozen |
 | 02 | [Survivorship Bias Impact](02_survivorship_bias_impact/) | Data Quality | ⚫ synth | ✅ | +0.135 Sharpe bias from naive filter |
-| 03 | [Factor Crowding](03_factor_crowding/) | Factor Research | 🟡 | ✅ | `mr5` only signal with positive α (not significant) |
+| 03 | [Factor Crowding](03_factor_crowding/) | Factor Research | 🟡 | ✅ | `mr5` largest α (+3.4%, not significant); `mom1` also positive |
 | 04 | [Regime Timing](04_regime_timing/) | Portfolio Construction | 🟢 | ✅ | **`mr5`+`risk_on_only` Sharpe 0.69** ⭐ book champion |
 | 05 | [Multi-Factor Construction](05_multifactor_construction/) | Portfolio Construction | 🟡 | ✅ | Best 3-blend 0.58 > any pair 0.46 > any single 0.39 |
 | 06 | [Execution Model](06_execution_model/) | Execution | 🟡 | ✅ | `mom1` loses 81% of Sharpe in crisis costs |
