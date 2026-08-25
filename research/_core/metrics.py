@@ -42,10 +42,21 @@ def compute_metrics(
     vol = float(rets.std() * np.sqrt(periods_per_year))
     sharpe = float(excess.mean() / excess.std() * np.sqrt(periods_per_year))
 
-    # Sortino uses downside deviation; avoid div-by-zero on all-positive streaks.
-    down = rets[rets < 0]
-    downside = float(down.std() * np.sqrt(periods_per_year)) if len(down) > 1 else np.nan
-    sortino = float(excess.mean() * periods_per_year / downside) if downside and downside > 0 else 0.0
+    # Sortino uses target semi-deviation (Sortino & Price 1994): the
+    # root-mean-square shortfall below the target — here 0 — averaged over
+    # EVERY period, not just the losing ones:
+    #
+    #     downside = sqrt( mean_t[ min(r_t - target, 0)^2 ] )
+    #
+    # The common shortcut, `rets[rets < 0].std()`, differs on two counts: it
+    # centres on the losers' own mean instead of the target, and it averages
+    # over the losing periods only. Neither error has a fixed sign, so the
+    # shortcut is not a conservative approximation — it is simply a different
+    # statistic, and which way it lands depends on how frequent and how
+    # dispersed the losses are.
+    shortfall = np.minimum(rets.values, 0.0)
+    downside = float(np.sqrt((shortfall ** 2).mean()) * np.sqrt(periods_per_year))
+    sortino = float(excess.mean() * periods_per_year / downside) if downside > 0 else 0.0
 
     pv = (1 + rets).cumprod()
     dd = (pv - pv.cummax()) / pv.cummax()

@@ -38,14 +38,23 @@ def _shrink_signal(signal: pd.DataFrame, penalty: float) -> pd.DataFrame:
     if penalty <= 0:
         return signal
     if penalty >= 1.0:
-        # Fully frozen: hold the first non-null row forward. Pandas' ewm
-        # requires alpha > 0, so we handle this edge case explicitly rather
-        # than clamping which would silently change behavior at the boundary.
-        first_row = signal.bfill().iloc[0]
-        return pd.DataFrame(
-            [first_row.values] * len(signal),
-            index=signal.index, columns=signal.columns,
-        )
+        # Fully frozen: each asset holds the FIRST value it actually observed,
+        # from the date it observed it. Anything earlier stays NaN, so the
+        # asset is simply absent from the cross-section until it has history.
+        #
+        # The obvious one-liner here is `signal.bfill().iloc[0]`, which is a
+        # look-ahead bug: it fills an asset's pre-history with a value drawn
+        # from its future. Pandas' ewm requires alpha > 0, so this boundary
+        # case is handled explicitly rather than by clamping.
+        frozen = signal.copy()
+        for col in signal.columns:
+            valid = signal[col].dropna()
+            if valid.empty:
+                frozen[col] = np.nan
+                continue
+            t0, v0 = valid.index[0], valid.iloc[0]
+            frozen[col] = np.where(signal.index >= t0, v0, np.nan)
+        return frozen
     alpha = 1.0 - penalty  # weight on new signal, in (0, 1)
     return signal.ewm(alpha=alpha, adjust=False).mean()
 

@@ -11,6 +11,8 @@ from typing import Dict, Optional
 
 import pandas as pd
 
+from research._core import frozen as _frozen
+
 CACHE_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data_cache"
 )
@@ -51,6 +53,13 @@ def fetch_cn_indices(
     """
     idx_map = indices or DEFAULT_INDICES
     cache_key = f"cn_{'_'.join(sorted(idx_map.keys()))}_{start}"
+
+    # Frozen copy first: akshare scrapes an unofficial endpoint, so a
+    # published result must not depend on it still answering the same way.
+    frozen_panel = _frozen.load(cache_key)
+    if frozen_panel is not None:
+        return frozen_panel
+
     os.makedirs(CACHE_DIR, exist_ok=True)
     path = os.path.join(CACHE_DIR, f"{cache_key}.pkl")
 
@@ -58,23 +67,48 @@ def fetch_cn_indices(
         with open(path, "rb") as f:
             return pickle.load(f)
 
+    import time
+
     import akshare as ak
-    series = {}
+
+    series, failed = {}, {}
     for label, sym in idx_map.items():
-        try:
-            raw = ak.stock_zh_index_daily(symbol=sym)
-        except Exception as e:
-            print(f"  [fetch_cn] skip {label} ({sym}): {e}")
+        # The upstream endpoint resets the connection under rapid sequential
+        # requests. Retry with backoff, and space the calls out: without this
+        # a run silently returns a panel with fewer indices than it asked for,
+        # which changes the universe a study is computed on without changing
+        # anything the study can see. That is the worst kind of data bug —
+        # every downstream number moves and nothing reports an error.
+        raw, last_err = None, None
+        for attempt in range(4):
+            try:
+                raw = ak.stock_zh_index_daily(symbol=sym)
+                break
+            except Exception as e:  # noqa: BLE001 - upstream raises bare errors
+                last_err = e
+                time.sleep(1.5 * (attempt + 1))
+        if raw is None:
+            failed[label] = f"{sym}: {type(last_err).__name__}: {last_err}"
             continue
+
         raw["date"] = pd.to_datetime(raw["date"])
         raw = raw.set_index("date").sort_index()
         monthly = raw["close"].resample("ME").last()
         ret = monthly.pct_change().dropna()
         ret = ret[ret.index >= start]
         series[label] = ret
+        time.sleep(1.0)
 
-    if not series:
-        raise RuntimeError("fetch_cn_indices: no indices loaded — akshare unreachable?")
+    if failed:
+        # Fail loudly. A partial panel is not a smaller version of the same
+        # study, it is a different study.
+        detail = "\n".join(f"    {k} -> {v}" for k, v in failed.items())
+        raise RuntimeError(
+            f"fetch_cn_indices: {len(failed)} of {len(idx_map)} indices could not "
+            f"be fetched after retries, so the panel would be missing columns the "
+            f"study expects:\n{detail}\n"
+            f"  Re-run when the upstream endpoint settles. Do not freeze a partial panel."
+        )
 
     df = pd.DataFrame(series)
     with open(path, "wb") as f:
