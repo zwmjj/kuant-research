@@ -104,6 +104,42 @@ Sanitized selection-stage outputs — the deployed portfolio configuration and t
 
 ---
 
+## Limitations of simulated performance
+
+Every figure in this repository is simulated or paper-traded. The gap between
+that and a live result is systematic rather than random, and it runs one way:
+
+- **No market impact.** Costs are modelled — commission, spread, square-root
+  impact — but a simulated fill never moves the book against itself. Impact
+  scales with size; these figures assume a size at which it is small.
+- **Idealised fills.** Orders clear at modelled prices without queue position,
+  partial fills, or rejections.
+- **No capital or behavioural constraint.** A simulated book is never margin
+  called, never forced to deleverage into a drawdown, and is never traded by
+  someone with money at risk.
+- **Borrow and funding are modelled, not incurred.** Short availability is
+  assumed; borrow cost is a parameter.
+- **Full-sample statistics are an upper bound.** Studies 01, 03, 04, 06 and 07
+  report in-sample figures and say so in their own READMEs. Treat those as a
+  ceiling on what an out-of-sample implementation would have produced, not as
+  an estimate of it.
+
+**The live book is not published.** Its parameters, allocation and realised
+track record are withheld, as is standard practice for proprietary capital.
+Nothing here is a live result.
+
 ## Disclaimer
 
-This repository is for research and educational purposes. Nothing here constitutes investment advice. Past walk-forward performance does not imply future results.
+This repository is published for professional and educational reference. It is
+**not investment advice, not a recommendation, and not an offer or
+solicitation** to buy or sell any instrument or to engage any investment
+service. No client or external capital is managed.
+
+Trading involves substantial risk of loss and is not suitable for every
+investor. **Past performance — whether actual, simulated or backtested — does
+not guarantee future results.**
+
+Any figure here may be revised as errors are found, and corrections are
+published rather than removed. The 2026-08 methodology audit above is an
+instance: three errors were fixed, the results they moved are documented, and
+the superseded numbers are named rather than quietly replaced.
