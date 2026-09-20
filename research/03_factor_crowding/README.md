@@ -50,10 +50,10 @@ python run.py
 
 | Signal   | Sharpe | α (ann) | α-t   | β_mkt  | β_smb  | β_hml  | β_rmw  | β_cma  | R²    |
 |----------|--------|---------|-------|--------|--------|--------|--------|--------|-------|
-| `mom12`  | −0.26  | −4.1%   | −0.78 | −0.12  | −0.41  | −0.26  | −0.42  | +0.69  | 0.19  |
-| `mom1`   | +0.26  | ±0.0%   |  0.00 | +0.22  | −0.01  |  0.00  | −0.18  | +0.16  | 0.05  |
-| `lowvol` | −0.27  | −3.9%   | −0.91 | −0.35  | −0.20  | −0.54  | +0.41  | +0.17  | **0.40** |
-| `mr5`    | +0.37  | **+1.3%** | +0.28 | +0.16  | −0.03  | −0.20  | −0.04  | +0.38  | 0.05  |
+| `mom12`  | −0.26  | −2.0%   | −0.39 | −0.12  | −0.43  | −0.25  | −0.43  | +0.68  | 0.20  |
+| `mom1`   | +0.26  | +2.1%   | +0.39 | +0.22  | −0.02  | ±0.00  | −0.18  | +0.14  | 0.05  |
+| `lowvol` | −0.27  | −1.8%   | −0.42 | −0.35  | −0.21  | −0.54  | +0.39  | +0.15  | **0.40** |
+| `mr5`    | +0.37  | **+3.4%** | +0.72 | +0.16  | −0.04  | −0.19  | −0.05  | +0.36  | 0.04  |
 
 ### Strategy × strategy correlation
 
@@ -67,18 +67,24 @@ python run.py
 
 ### What we learn
 
-1. **`mr5` has the only positive alpha**, at +1.3% annualized — but with
-   a t-stat of only +0.28, it is *not* statistically significant in
-   this 120-month sample. The signal's edge, such as it is, is
-   consistent with the full-sample Sharpe but cannot be cleanly
-   distinguished from zero with only 10 years of monthly data on a
-   10-ETF universe. A wider universe / longer history (via the WRDS
-   backend in `01_signal_decay_vs_cost/data.py`) is the next step if
-   you want to harden the conclusion.
+1. **`mr5` has the largest alpha**, at +3.4% annualized — but with a
+   t-stat of only +0.72, it is *not* statistically significant in this
+   120-month sample. `mom1` is also positive (+2.1%, t = +0.39), so the
+   sign alone does not separate them; neither can be cleanly distinguished
+   from zero with ten years of monthly data on a 10-ETF universe.
+
+   These alphas are roughly two percentage points higher than an earlier
+   version of this study reported, and the reason is a correction, not a
+   data revision: the regressand had the risk-free rate deducted from it.
+   These signals are dollar-neutral long/short spreads — the long leg is
+   funded by the short leg, no cash is tied up — so deducting the
+   risk-free rate understated every alpha by the whole risk-free rate.
+   At 2015-2025 levels that is about two points a year, which is larger
+   than most of the alphas being measured.
 
 2. **`lowvol` is the most FF5-explained of the four** — R² = 0.40, a
    big negative HML (−0.54) and RMW (+0.41) — basically a
-   quality/anti-value tilt. Its negative α (−3.9%) means the
+   quality/anti-value tilt. Its negative α (−1.8%) means the
    low-vol premium in ETF sectors over 2015-2025 is **worse than pure
    smart-beta exposure**; you'd do better just holding the FF5 blend
    directly.

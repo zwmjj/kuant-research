@@ -12,6 +12,8 @@ from typing import List, Optional
 
 import pandas as pd
 
+from research._core import frozen as _frozen
+
 CACHE_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data_cache"
 )
@@ -22,8 +24,13 @@ def load_daily_panel(
     start: str,
     end: Optional[str] = None,
 ) -> pd.DataFrame:
-    os.makedirs(CACHE_DIR, exist_ok=True)
     key = f"etf_daily_{'_'.join(sorted(tickers))[:80]}_{start}_{end or 'now'}"
+
+    frozen_panel = _frozen.load(key)
+    if frozen_panel is not None:
+        return frozen_panel
+
+    os.makedirs(CACHE_DIR, exist_ok=True)
     path = os.path.join(CACHE_DIR, f"{key}.pkl")
     if os.path.exists(path):
         with open(path, "rb") as f:

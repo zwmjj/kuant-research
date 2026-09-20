@@ -12,10 +12,10 @@
     "vix_regime": {
       "full": {
         "n_periods": 120,
-        "total_return": -0.390568,
-        "cagr": -0.048317,
+        "total_return": -0.390567,
+        "cagr": -0.048316,
         "sharpe": -0.218,
-        "sortino": -0.2653,
+        "sortino": -0.2778,
         "max_drawdown": -0.531225,
         "vol": 0.163909,
         "win_rate": 0.4583
@@ -24,11 +24,11 @@
         "split_date": "2020-12-31",
         "is": {
           "n_periods": 60,
-          "total_return": 0.015746,
+          "total_return": 0.015747,
           "cagr": 0.00313,
           "sharpe": 0.0939,
-          "sortino": 0.1233,
-          "max_drawdown": -0.229432,
+          "sortino": 0.1409,
+          "max_drawdown": -0.229431,
           "vol": 0.148716,
           "win_rate": 0.3667
         },
@@ -37,7 +37,7 @@
           "total_return": -0.400015,
           "cagr": -0.097124,
           "sharpe": -0.4803,
-          "sortino": -0.5891,
+          "sortino": -0.5601,
           "max_drawdown": -0.448052,
           "vol": 0.177911,
           "win_rate": 0.55
@@ -47,11 +47,11 @@
     "curve_signal": {
       "full": {
         "n_periods": 120,
-        "total_return": 0.162903,
+        "total_return": 0.162902,
         "cagr": 0.015206,
         "sharpe": 0.1753,
-        "sortino": 0.2611,
-        "max_drawdown": -0.369032,
+        "sortino": 0.258,
+        "max_drawdown": -0.369033,
         "vol": 0.148408,
         "win_rate": 0.4833
       },
@@ -59,21 +59,21 @@
         "split_date": "2020-12-31",
         "is": {
           "n_periods": 60,
-          "total_return": 0.49225,
+          "total_return": 0.492253,
           "cagr": 0.083349,
           "sharpe": 0.6562,
-          "sortino": 1.1834,
-          "max_drawdown": -0.154451,
+          "sortino": 1.2492,
+          "max_drawdown": -0.15445,
           "vol": 0.135924,
           "win_rate": 0.5
         },
         "oos": {
           "n_periods": 60,
-          "total_return": -0.220705,
+          "total_return": -0.220707,
           "cagr": -0.04865,
           "sharpe": -0.2337,
-          "sortino": -0.3309,
-          "max_drawdown": -0.369032,
+          "sortino": -0.3009,
+          "max_drawdown": -0.369033,
           "vol": 0.15897,
           "win_rate": 0.4667
         }
@@ -82,11 +82,11 @@
     "macro_blend": {
       "full": {
         "n_periods": 120,
-        "total_return": -0.471872,
-        "cagr": -0.061846,
+        "total_return": -0.471873,
+        "cagr": -0.061847,
         "sharpe": -0.2907,
-        "sortino": -0.3913,
-        "max_drawdown": -0.514551,
+        "sortino": -0.377,
+        "max_drawdown": -0.514552,
         "vol": 0.169252,
         "win_rate": 0.45
       },
@@ -97,7 +97,7 @@
           "total_return": -0.080796,
           "cagr": -0.016708,
           "sharpe": -0.0212,
-          "sortino": -0.0265,
+          "sortino": -0.0291,
           "max_drawdown": -0.276313,
           "vol": 0.163538,
           "win_rate": 0.4
@@ -107,7 +107,7 @@
           "total_return": -0.425451,
           "cagr": -0.104913,
           "sharpe": -0.5419,
-          "sortino": -0.7706,
+          "sortino": -0.6742,
           "max_drawdown": -0.433406,
           "vol": 0.175154,
           "win_rate": 0.5

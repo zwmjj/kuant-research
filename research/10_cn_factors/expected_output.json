@@ -53,7 +53,7 @@
         "total_return": 0.222196,
         "cagr": 0.01262,
         "sharpe": 0.1609,
-        "sortino": 0.2196,
+        "sortino": 0.2296,
         "max_drawdown": -0.434069,
         "vol": 0.141416,
         "win_rate": 0.4948
@@ -65,7 +65,7 @@
           "total_return": -0.068809,
           "cagr": -0.00646,
           "sharpe": 0.0355,
-          "sortino": 0.0464,
+          "sortino": 0.0488,
           "max_drawdown": -0.416392,
           "vol": 0.152131,
           "win_rate": 0.4848
@@ -75,7 +75,7 @@
           "total_return": 0.312509,
           "cagr": 0.055894,
           "sharpe": 0.5308,
-          "sortino": 0.9863,
+          "sortino": 0.9137,
           "max_drawdown": -0.154186,
           "vol": 0.114779,
           "win_rate": 0.5167
@@ -120,7 +120,7 @@
         "total_return": -0.172645,
         "cagr": -0.011775,
         "sharpe": -0.0043,
-        "sortino": -0.0063,
+        "sortino": -0.006,
         "max_drawdown": -0.516767,
         "vol": 0.149661,
         "win_rate": 0.5312
@@ -132,7 +132,7 @@
           "total_return": -0.351687,
           "cagr": -0.038632,
           "sharpe": -0.2313,
-          "sortino": -0.3138,
+          "sortino": -0.3001,
           "max_drawdown": -0.495056,
           "vol": 0.132096,
           "win_rate": 0.5303
@@ -142,7 +142,7 @@
           "total_return": 0.276166,
           "cagr": 0.049981,
           "sharpe": 0.3575,
-          "sortino": 0.5654,
+          "sortino": 0.5592,
           "max_drawdown": -0.273404,
           "vol": 0.182297,
           "win_rate": 0.5333
@@ -187,7 +187,7 @@
         "total_return": 0.279293,
         "cagr": 0.057352,
         "sharpe": 0.9264,
-        "sortino": 1.6877,
+        "sortino": 1.659,
         "max_drawdown": -0.05391,
         "vol": 0.06239,
         "win_rate": 0.5849
@@ -199,7 +199,7 @@
           "total_return": 0.279293,
           "cagr": 0.057352,
           "sharpe": 0.9264,
-          "sortino": 1.6877,
+          "sortino": 1.659,
           "max_drawdown": -0.05391,
           "vol": 0.06239,
           "win_rate": 0.5849
@@ -242,7 +242,7 @@
         "total_return": 0.225988,
         "cagr": 0.022684,
         "sharpe": 0.4083,
-        "sortino": 0.5804,
+        "sortino": 0.6616,
         "max_drawdown": -0.109399,
         "vol": 0.059237,
         "win_rate": 0.5505
@@ -254,7 +254,7 @@
           "total_return": 0.225988,
           "cagr": 0.022684,
           "sharpe": 0.4083,
-          "sortino": 0.5804,
+          "sortino": 0.6616,
           "max_drawdown": -0.109399,
           "vol": 0.059237,
           "win_rate": 0.5505
@@ -297,7 +297,7 @@
         "total_return": 0.860216,
         "cagr": 0.040857,
         "sharpe": 0.2885,
-        "sortino": 0.464,
+        "sortino": 0.4497,
         "max_drawdown": -0.488373,
         "vol": 0.236476,
         "win_rate": 0.5
@@ -309,7 +309,7 @@
           "total_return": 0.441509,
           "cagr": 0.035441,
           "sharpe": 0.2655,
-          "sortino": 0.4246,
+          "sortino": 0.406,
           "max_drawdown": -0.488373,
           "vol": 0.260859,
           "win_rate": 0.4841
@@ -319,7 +319,7 @@
           "total_return": 0.290464,
           "cagr": 0.052323,
           "sharpe": 0.3742,
-          "sortino": 0.7225,
+          "sortino": 0.6524,
           "max_drawdown": -0.329136,
           "vol": 0.176569,
           "win_rate": 0.5333

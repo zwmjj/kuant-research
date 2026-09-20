@@ -56,7 +56,8 @@ def apply_delisting_adjustment(df: pd.DataFrame) -> pd.DataFrame:
     M&A and exchange moves. Dropping the month instead is exactly the
     survivorship bias study 02 measures.
 
-    Kept separate from the query so it can be tested without a WRDS session.
+    Kept separate from the query so it can be tested without a WRDS session —
+    see `research/_core/test_core.py`.
     """
     out = df.copy()
     is_delist = out["dlstcd"].notna()

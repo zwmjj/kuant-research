@@ -21,12 +21,19 @@ opt-in hook for readers who do hold a subscription.
 | **Synthetic panels** | — | Delisting-bias and crowding simulations | Monthly | Generated in-repo from a pinned seed | A |
 | **WRDS CRSP / Compustat** | U.S. | Monthly stock file, delisting file, fundamentals | Monthly / annual | Institutional subscription; credentials read from the environment | C |
 
-Fetchers live in [`research/_data/`](../research/_data/). Every fetcher caches
-its output to `research/data_cache/` as a pickle, so a second run of any study
-is offline and deterministic. No fetcher in this repository touches a licensed
-vendor: where a study offers a CRSP backend it is an opt-in hook inside that
-study's own `data.py`, guarded on `WRDS_USERNAME` / `WRDS_PASSWORD` being
-present, and the study's headline result is always the public-data version.
+Fetchers live in [`research/_data/`](../research/_data/), and every one of them
+reads [`research/_data_frozen/`](../research/_data_frozen/) before it considers
+going to the network. The frozen panels are committed CSVs with a manifest
+recording the source, the fetch date, a SHA-256 and the coverage of each — so a
+fresh clone reproduces every published figure with **no network access at all**,
+and a published figure stays checkable after the upstream endpoint changes.
+`research/data_cache/` remains as an unversioned local working cache; when both
+exist the frozen copy wins.
+
+No fetcher in this repository touches a licensed vendor: where a study offers a
+CRSP backend it is an opt-in hook inside that study's own `data.py`, guarded on
+`WRDS_USERNAME` / `WRDS_PASSWORD` being present, and the study's headline result
+is always the public-data version.
 
 ### Why the public backend is the published one
 
@@ -81,9 +88,11 @@ pip install -r requirements.txt
 python run.py
 ```
 
-The first run fetches and caches; subsequent runs are offline. Each run
-writes `sample_output/results.json` and diffs it against the committed
-`expected_output.json`, exiting non-zero on any metric drift beyond 1e-3.
+Every run is offline: the study reads the frozen panel committed under
+`research/_data_frozen/`. Each run writes `sample_output/results.json` and diffs
+it against the committed `expected_output.json`, exiting non-zero on any metric
+drift beyond 1e-3. To confirm the offline claim rather than take it on trust,
+disconnect the network and run any study — it must still pass its own gate.
 Source, universe, date range, and every parameter are pinned in that
 study's `config.yaml`; the contract each fetcher must satisfy is documented
 in its `data_contract.md`.

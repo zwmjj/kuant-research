@@ -13,49 +13,49 @@
           "penalty": 0.0,
           "sharpe": -0.1937,
           "cagr": -0.044338,
-          "max_drawdown": -0.443524
+          "max_drawdown": -0.443525
         },
         {
           "penalty": 0.05,
           "sharpe": -0.1801,
           "cagr": -0.043269,
-          "max_drawdown": -0.443524
+          "max_drawdown": -0.443525
         },
         {
           "penalty": 0.1,
           "sharpe": -0.178,
           "cagr": -0.043133,
-          "max_drawdown": -0.44695
+          "max_drawdown": -0.446951
         },
         {
           "penalty": 0.15,
           "sharpe": -0.2258,
           "cagr": -0.05222,
-          "max_drawdown": -0.476437
+          "max_drawdown": -0.476438
         },
         {
           "penalty": 0.2,
           "sharpe": -0.2596,
           "cagr": -0.058124,
-          "max_drawdown": -0.507561
+          "max_drawdown": -0.507562
         },
         {
           "penalty": 0.25,
           "sharpe": -0.2556,
           "cagr": -0.057441,
-          "max_drawdown": -0.494537
+          "max_drawdown": -0.494538
         },
         {
           "penalty": 0.3,
           "sharpe": -0.2136,
           "cagr": -0.049888,
-          "max_drawdown": -0.459962
+          "max_drawdown": -0.459963
         },
         {
           "penalty": 0.4,
           "sharpe": -0.1738,
           "cagr": -0.043238,
-          "max_drawdown": -0.418492
+          "max_drawdown": -0.418493
         },
         {
           "penalty": 0.5,
@@ -67,7 +67,7 @@
           "penalty": 0.6,
           "sharpe": -0.1251,
           "cagr": -0.035286,
-          "max_drawdown": -0.36408
+          "max_drawdown": -0.364082
         },
         {
           "penalty": 0.8,
@@ -77,16 +77,16 @@
         },
         {
           "penalty": 1.0,
-          "sharpe": 0.2332,
-          "cagr": 0.026614,
-          "max_drawdown": -0.475944
+          "sharpe": 0.1308,
+          "cagr": 0.007937,
+          "max_drawdown": -0.467458
         }
       ],
       "best_penalty": {
         "penalty": 1.0,
-        "sharpe": 0.2332,
-        "cagr": 0.026614,
-        "max_drawdown": -0.475944
+        "sharpe": 0.1308,
+        "cagr": 0.007937,
+        "max_drawdown": -0.467458
       },
       "cost_multiplier_sweep": [
         {
@@ -142,43 +142,43 @@
           "penalty": 0.0,
           "sharpe": 0.4642,
           "cagr": 0.065745,
-          "max_drawdown": -0.388452
+          "max_drawdown": -0.388453
         },
         {
           "penalty": 0.05,
-          "sharpe": 0.4757,
+          "sharpe": 0.4756,
           "cagr": 0.067893,
           "max_drawdown": -0.3807
         },
         {
           "penalty": 0.1,
           "sharpe": 0.3272,
-          "cagr": 0.042892,
+          "cagr": 0.042891,
           "max_drawdown": -0.423925
         },
         {
           "penalty": 0.15,
           "sharpe": 0.3771,
-          "cagr": 0.051324,
+          "cagr": 0.051323,
           "max_drawdown": -0.40937
         },
         {
           "penalty": 0.2,
           "sharpe": 0.3672,
           "cagr": 0.048095,
-          "max_drawdown": -0.437663
+          "max_drawdown": -0.437664
         },
         {
           "penalty": 0.25,
           "sharpe": 0.2604,
-          "cagr": 0.029042,
+          "cagr": 0.029041,
           "max_drawdown": -0.391348
         },
         {
           "penalty": 0.3,
           "sharpe": 0.2083,
           "cagr": 0.020605,
-          "max_drawdown": -0.436041
+          "max_drawdown": -0.436042
         },
         {
           "penalty": 0.4,
@@ -189,7 +189,7 @@
         {
           "penalty": 0.5,
           "sharpe": 0.285,
-          "cagr": 0.033827,
+          "cagr": 0.033826,
           "max_drawdown": -0.414853
         },
         {
@@ -202,18 +202,18 @@
           "penalty": 0.8,
           "sharpe": 0.1517,
           "cagr": 0.011526,
-          "max_drawdown": -0.425058
+          "max_drawdown": -0.425059
         },
         {
           "penalty": 1.0,
-          "sharpe": 0.3072,
-          "cagr": 0.03497,
-          "max_drawdown": -0.322855
+          "sharpe": 0.2977,
+          "cagr": 0.033537,
+          "max_drawdown": -0.322854
         }
       ],
       "best_penalty": {
         "penalty": 0.05,
-        "sharpe": 0.4757,
+        "sharpe": 0.4756,
         "cagr": 0.067893,
         "max_drawdown": -0.3807
       },
@@ -226,7 +226,7 @@
         {
           "multiplier": 1.0,
           "sharpe": 0.2604,
-          "cagr": 0.029042
+          "cagr": 0.029041
         },
         {
           "multiplier": 1.5,
@@ -270,8 +270,8 @@
         {
           "penalty": 0.0,
           "sharpe": -0.3966,
-          "cagr": -0.075724,
-          "max_drawdown": -0.658499
+          "cagr": -0.075723,
+          "max_drawdown": -0.658498
         },
         {
           "penalty": 0.05,
@@ -283,18 +283,18 @@
           "penalty": 0.1,
           "sharpe": -0.329,
           "cagr": -0.065709,
-          "max_drawdown": -0.634098
+          "max_drawdown": -0.634097
         },
         {
           "penalty": 0.15,
           "sharpe": -0.3221,
           "cagr": -0.064976,
-          "max_drawdown": -0.63634
+          "max_drawdown": -0.636339
         },
         {
           "penalty": 0.2,
           "sharpe": -0.2969,
-          "cagr": -0.061334,
+          "cagr": -0.061333,
           "max_drawdown": -0.624104
         },
         {
@@ -324,7 +324,7 @@
         {
           "penalty": 0.6,
           "sharpe": -0.2518,
-          "cagr": -0.056104,
+          "cagr": -0.056105,
           "max_drawdown": -0.638398
         },
         {
@@ -335,22 +335,22 @@
         },
         {
           "penalty": 1.0,
-          "sharpe": -0.2287,
-          "cagr": -0.029392,
-          "max_drawdown": -0.281242
+          "sharpe": -0.0358,
+          "cagr": -0.008192,
+          "max_drawdown": -0.281243
         }
       ],
       "best_penalty": {
         "penalty": 1.0,
-        "sharpe": -0.2287,
-        "cagr": -0.029392,
-        "max_drawdown": -0.281242
+        "sharpe": -0.0358,
+        "cagr": -0.008192,
+        "max_drawdown": -0.281243
       },
       "cost_multiplier_sweep": [
         {
           "multiplier": 0.5,
           "sharpe": -0.2597,
-          "cagr": -0.054986
+          "cagr": -0.054985
         },
         {
           "multiplier": 1.0,
@@ -370,7 +370,7 @@
         {
           "multiplier": 3.0,
           "sharpe": -0.2885,
-          "cagr": -0.059509
+          "cagr": -0.059508
         },
         {
           "multiplier": 5.0,
@@ -400,19 +400,19 @@
           "penalty": 0.0,
           "sharpe": 0.2135,
           "cagr": 0.020573,
-          "max_drawdown": -0.450371
+          "max_drawdown": -0.450372
         },
         {
           "penalty": 0.05,
           "sharpe": 0.2245,
           "cagr": 0.022371,
-          "max_drawdown": -0.439095
+          "max_drawdown": -0.439096
         },
         {
           "penalty": 0.1,
           "sharpe": 0.2746,
           "cagr": 0.029878,
-          "max_drawdown": -0.360135
+          "max_drawdown": -0.360136
         },
         {
           "penalty": 0.15,
@@ -430,50 +430,50 @@
           "penalty": 0.25,
           "sharpe": 0.3678,
           "cagr": 0.043403,
-          "max_drawdown": -0.257983
+          "max_drawdown": -0.257984
         },
         {
           "penalty": 0.3,
           "sharpe": 0.4713,
           "cagr": 0.058756,
-          "max_drawdown": -0.267842
+          "max_drawdown": -0.267843
         },
         {
           "penalty": 0.4,
           "sharpe": 0.2089,
           "cagr": 0.019361,
-          "max_drawdown": -0.368989
+          "max_drawdown": -0.36899
         },
         {
           "penalty": 0.5,
           "sharpe": 0.1896,
-          "cagr": 0.016625,
-          "max_drawdown": -0.337923
+          "cagr": 0.016624,
+          "max_drawdown": -0.337924
         },
         {
           "penalty": 0.6,
           "sharpe": 0.1716,
           "cagr": 0.014067,
-          "max_drawdown": -0.345706
+          "max_drawdown": -0.345707
         },
         {
           "penalty": 0.8,
           "sharpe": -0.075,
           "cagr": -0.019916,
-          "max_drawdown": -0.460595
+          "max_drawdown": -0.460596
         },
         {
           "penalty": 1.0,
-          "sharpe": -0.0667,
-          "cagr": -0.02919,
-          "max_drawdown": -0.598734
+          "sharpe": -0.0669,
+          "cagr": -0.026788,
+          "max_drawdown": -0.570832
         }
       ],
       "best_penalty": {
         "penalty": 0.3,
         "sharpe": 0.4713,
         "cagr": 0.058756,
-        "max_drawdown": -0.267842
+        "max_drawdown": -0.267843
       },
       "cost_multiplier_sweep": [
         {

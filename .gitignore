@@ -16,3 +16,6 @@ research/data_cache/
 research/**/sample_output/
 # ...but keep the expected_output.json reference files versioned
 !research/**/expected_output.json
+
+# Working output of tools/rerun_and_diff.py
+rerun_report.md

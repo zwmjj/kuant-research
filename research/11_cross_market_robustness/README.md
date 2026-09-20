@@ -76,7 +76,7 @@ cross-sectional quant book.
    in both markets, and better in CN (+0.49) than US (+0.37). It's
    also the champion in:
    - Study 01 (best cost-robust Sharpe)
-   - Study 03 (only signal with positive α)
+   - Study 03 (largest α of the four, though not significant)
    - Study 05 (member of the best 3-signal blend)
    - Study 08 (only signal with stable IS/OOS)
    Four independent checks, same winner. It is not unanimous across the

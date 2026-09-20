@@ -48,9 +48,8 @@ worth several tenths of a Sharpe.
 is computed from this backend — every headline number comes from the public
 yfinance path, because a CRSP-backed number cannot be checked by a reader
 without a subscription. The query is written to standard CRSP schema, and the
-delisting arithmetic is separated into `apply_delisting_adjustment()` so it can
-be checked without a WRDS session, but the repository ships no evidence that the
-query itself has been executed. Treat it
+delisting arithmetic is unit-tested in `research/_core/test_core.py`, but the
+repository ships no evidence that the query itself has been executed. Treat it
 as a starting point to adapt rather than a tested path.
 
 ## Why both?

@@ -7,42 +7,42 @@
   "methods": {
     "equal_weight": {
       "n_periods": 120,
-      "total_return": -0.022737,
+      "total_return": -0.022738,
       "cagr": -0.002297,
       "sharpe": 0.0204,
-      "sortino": 0.021,
+      "sortino": 0.0256,
       "max_drawdown": -0.243035,
       "vol": 0.089438,
       "win_rate": 0.5333
     },
     "inverse_vol": {
       "n_periods": 120,
-      "total_return": -0.078452,
+      "total_return": -0.078453,
       "cagr": -0.008137,
       "sharpe": -0.049,
-      "sortino": -0.0465,
-      "max_drawdown": -0.23218,
-      "vol": 0.087106,
+      "sortino": -0.0607,
+      "max_drawdown": -0.232181,
+      "vol": 0.087107,
       "win_rate": 0.4333
     },
     "minimum_variance": {
       "n_periods": 120,
-      "total_return": -0.239798,
+      "total_return": -0.2398,
       "cagr": -0.027045,
       "sharpe": -0.2026,
-      "sortino": -0.2283,
-      "max_drawdown": -0.325443,
+      "sortino": -0.2633,
+      "max_drawdown": -0.325445,
       "vol": 0.106688,
       "win_rate": 0.3667
     },
     "max_sharpe": {
       "n_periods": 120,
-      "total_return": -0.827589,
-      "cagr": -0.161204,
-      "sharpe": 0.2534,
-      "sortino": 0.4125,
-      "max_drawdown": -0.941553,
-      "vol": 1.076788,
+      "total_return": -0.830567,
+      "cagr": -0.162664,
+      "sharpe": 0.253,
+      "sortino": 0.5564,
+      "max_drawdown": -0.941548,
+      "vol": 1.076836,
       "win_rate": 0.4
     }
   },
@@ -50,6 +50,6 @@
     "equal_weight": 0.0,
     "inverse_vol": -0.0694,
     "minimum_variance": -0.223,
-    "max_sharpe": 0.233
+    "max_sharpe": 0.2326
   }
 }

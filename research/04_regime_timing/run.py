@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import json
+import os
+import pickle
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[1]
+CACHE_DIR = str(REPO_ROOT / "research" / "data_cache")
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(HERE))
 
@@ -30,12 +33,26 @@ def main():
     )
     print(f"[data] sector ETF panel: {rets.shape[0]}x{rets.shape[1]}")
 
-    # VIX series via yfinance
-    import yfinance as yf
-    print(f"[data] fetching {cfg['regime_source']} daily close for VIX regime ...")
-    vix_raw = yf.download(cfg["regime_source"], start=cfg["start_date"],
-                          end=cfg["end_date"], auto_adjust=True, progress=False)
-    vix = vix_raw["Close"].iloc[:, 0] if hasattr(vix_raw["Close"], "iloc") else vix_raw["Close"]
+    # VIX series — frozen copy first, exactly like every other input. This
+    # study used to fetch it live on every run, which quietly made it the one
+    # study that could not reproduce offline and whose regime labels could
+    # shift under a data revision without anything reporting it.
+    from research._core import frozen as _frozen
+    vix_key = f"vix_{cfg['regime_source']}_{cfg['start_date']}_{cfg['end_date']}"
+    vix_panel = _frozen.load(vix_key)
+    if vix_panel is None:
+        import yfinance as yf
+        print(f"[data] fetching {cfg['regime_source']} daily close for VIX regime ...")
+        vix_raw = yf.download(cfg["regime_source"], start=cfg["start_date"],
+                              end=cfg["end_date"], auto_adjust=True, progress=False)
+        vix_panel = vix_raw[["Close"]].copy()
+        vix_panel.columns = ["VIX"]
+        os.makedirs(CACHE_DIR, exist_ok=True)
+        with open(os.path.join(CACHE_DIR, f"{vix_key}.pkl"), "wb") as fh:
+            pickle.dump(vix_panel, fh)
+    else:
+        print(f"[data] VIX from frozen panel ({len(vix_panel)} rows)")
+    vix = vix_panel.iloc[:, 0]
     regime = vix_regime(vix, lookback_months=int(cfg["regime_lookback_months"]))
     print(f"[data] regime coverage: {(regime == 'high').sum()} high, "
           f"{(regime == 'low').sum()} low months")

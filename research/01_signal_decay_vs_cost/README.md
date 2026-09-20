@@ -36,8 +36,8 @@ stock screen, and Shumway (1997) delisting adjustment, reading
 `WRDS_USERNAME` / `WRDS_PASSWORD` from the environment. **No result in this
 repository comes from it** — a CRSP-backed figure is not checkable by a
 reader without a subscription, so everything published here is the public
-path. The delisting arithmetic is split out so it can be checked without a
-WRDS session; the query itself ships unexercised. See `data_contract.md`.
+path. The delisting arithmetic is unit-tested; the query itself ships
+unexercised. See `data_contract.md`.
 
 ### Signals (all price-based, no fundamentals needed)
 
@@ -95,9 +95,9 @@ Cache lives in `research/data_cache/` and is reused after first download.
 
 | Signal   | Best penalty | Best Sharpe | ACF@1  | Half-life | Sharpe @ 1× cost | Sharpe @ 5× cost |
 |----------|--------------|-------------|--------|-----------|------------------|------------------|
-| `mom12`  | **1.00**     | +0.233      | +0.805 | 4 mo      | −0.256           | −0.320           |
+| `mom12`  | **1.00**     | +0.131      | +0.805 | 4 mo      | −0.256           | −0.320           |
 | `mom1`   | 0.05         | **+0.476**  | −0.204 | 1 mo      | +0.260           | +0.004           |
-| `lowvol` | 1.00         | −0.229      | +0.962 | 9 mo      | −0.265           | −0.312           |
+| `lowvol` | 1.00         | −0.036      | +0.962 | 9 mo      | −0.265           | −0.312           |
 | `mr5`    | 0.30         | +0.471      | +0.621 | 2 mo      | +0.368           | **+0.226**       |
 
 ### Reading the table
@@ -107,7 +107,12 @@ Cache lives in `research/data_cache/` and is reused after first download.
    (ACF@1 = 0.81) that *any* rebalancing destroys value. The best
    implementation is to pick the ranking once and hold it. This is a
    surprising but real finding of the small-universe run and reinforces
-   the core point: signal persistence dominates cost.
+   the core point: signal persistence dominates cost. Note the level:
+   +0.131, not the +0.233 an earlier version of this study reported. That
+   figure came from a look-ahead in the freezing path — the first row was
+   back-filled from an asset's own future — and correcting it roughly
+   halved the frozen result. The *shape* survived the correction; the
+   magnitude did not.
 
 2. **`mom1` is the opposite story.** Reversal signal, ACF@1 = −0.20,
    half-life 1 month. Best Sharpe at penalty 0.05 (the most aggressive

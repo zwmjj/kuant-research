@@ -1,11 +1,15 @@
 """Unified returns-panel loader for every study.
 
-Three sources, probed in order (caller can pin one via `source=...`):
+Four sources, probed in order (caller can pin one via `source=...`):
 
-    1. cache   — pre-built pickle in kuant-research/data_cache/<name>.pkl
-                 (fastest, used by CI / regression tests)
+    0. frozen   — versioned CSV in research/_data_frozen/<name>.csv, written
+                  once by tools/freeze_data.py and committed. This is what
+                  makes a fresh clone reproduce with no network at all, and
+                  what pins the result against upstream data changing.
+    1. cache    — pre-built pickle in kuant-research/data_cache/<name>.pkl
+                  (a local working cache; not versioned)
     2. yfinance — download on demand given a ticker list
-                  (works offline-of-WRDS, <=100 tickers, monthly resample)
+                  (<=100 tickers, monthly resample)
     3. csv      — user-supplied CSV for studies with proprietary data
                   (expected shape: Date index, one column per asset, monthly)
 
@@ -24,6 +28,8 @@ from typing import List, Optional
 
 import numpy as np
 import pandas as pd
+
+from research._core import frozen as _frozen
 
 CACHE_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "data_cache"
@@ -47,14 +53,26 @@ def load_returns_panel(
         carry their own column set.
     start, end : str
         Inclusive date bounds. `end=None` means "today".
-    source : {'auto', 'cache', 'yfinance', 'csv'}
-        'auto' tries cache -> yfinance -> csv in order.
+    source : {'auto', 'frozen', 'cache', 'yfinance', 'csv'}
+        'auto' tries frozen -> cache -> yfinance -> csv in order. Pin
+        'frozen' to guarantee a run touches no network and uses exactly the
+        committed data.
     cache_name : str
         Filename (without .pkl) in data_cache/. Defaults to joined ticker hash.
     csv_path : str
         Absolute path to a CSV file when source='csv'.
     """
     os.makedirs(CACHE_DIR, exist_ok=True)
+
+    if source in ("auto", "frozen") and cache_name:
+        panel = _frozen.load(cache_name)
+        if panel is not None:
+            return _slice(panel, start, end)
+        if source == "frozen":
+            raise FileNotFoundError(
+                f"No frozen panel named '{cache_name}'. Run tools/freeze_data.py "
+                "on a machine with network access to create it."
+            )
 
     if source in ("auto", "cache") and cache_name:
         path = os.path.join(CACHE_DIR, f"{cache_name}.pkl")

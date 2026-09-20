@@ -15,8 +15,9 @@ def ff5_regression(
     strategy_returns: pd.Series,
     ff5: pd.DataFrame,
     periods_per_year: int = 12,
+    self_financing: bool = True,
 ) -> dict:
-    """Regress a strategy's excess return on FF5 factors.
+    """Regress a strategy's return on the FF5 factors.
 
     Parameters
     ----------
@@ -25,6 +26,14 @@ def ff5_regression(
     ff5 : pd.DataFrame
         Ken French 5-factor panel. Expected columns: Mkt-RF, SMB, HML,
         RMW, CMA, RF. Decimal returns.
+    self_financing : bool, default True
+        True for a dollar-neutral long/short spread: the long leg is funded
+        by the short leg, so the strategy never ties up cash and the
+        risk-free rate must NOT be deducted. Deducting it understates alpha
+        by the full risk-free rate — roughly 3-4%/yr at 2023-2025 levels,
+        which is larger than most of the alphas being measured.
+        Set False only for a long-only or otherwise cash-consuming book,
+        where the regressand is genuinely an excess return.
 
     Returns
     -------
@@ -40,7 +49,9 @@ def ff5_regression(
     if len(common) < 24:
         return {"error": "insufficient overlap (<24 months)", "n": int(len(common))}
 
-    y = strategy_returns.loc[common] - ff5.loc[common, "RF"]
+    y = strategy_returns.loc[common]
+    if not self_financing:
+        y = y - ff5.loc[common, "RF"]
     X = ff5.loc[common, cols].copy()
     X.insert(0, "const", 1.0)
 
